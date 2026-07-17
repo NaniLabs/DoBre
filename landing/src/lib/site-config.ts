@@ -22,10 +22,15 @@ export interface ReleaseConfig {
 }
 
 export const releaseConfig: ReleaseConfig = {
-  version: 'Próximamente',
-  changelogUrl: null,
-  androidDownloadUrl: null,
-  windowsDownloadUrl: null,
+  version: 'v0.3.0',
+  changelogUrl: 'https://github.com/NaniLabs/DoBre/releases/tag/DoBre',
+
+  androidDownloadUrl:
+    'https://github.com/NaniLabs/DoBre/releases/download/DoBre/DoBre-v0.3.0.apk',
+
+  windowsDownloadUrl:
+    'https://github.com/NaniLabs/DoBre/releases/download/DoBre/DoBreSetup-v0.3.0.exe',
+
   maintenanceMode: false,
 }
 

@@ -1,25 +1,78 @@
-# Landing de DoBre
+# DoBre
 
-Landing independiente de la aplicación Flutter. Está construida con React, Vite, TypeScript y Tailwind CSS.
+DoBre helps Mercado Libre sellers estimate a listing price from the amount they want to receive. It presents the key publication variables in a clear flow, so sellers can make faster and more informed pricing decisions.
 
-## Desarrollo
+## Features
+
+- Responsive bilingual landing in Spanish and English.
+- Persistent language and color-theme preferences.
+- Interactive price simulator for product discovery.
+- Platform-specific Android and Windows download actions.
+- Android installation guidance for GitHub Releases distribution.
+- Accessible navigation, keyboard support, and reduced-motion handling.
+- SEO, Open Graph, Twitter Card, sitemap, robots file, and social-share assets.
+
+## Screenshots
+
+Product screenshots will be added here when final branding assets are available.
+
+## Tech Stack
+
+- Flutter for the DoBre application.
+- React, Vite, TypeScript, and Tailwind CSS for this landing.
+- Cloudflare Pages for static hosting.
+- Cloudflare Workers for remote configuration consumed by the Flutter app.
+
+## Repository Structure
+
+```text
+dobre/
+  lib/                  Flutter application
+  cloudflare-worker/    Remote configuration worker
+  landing/              React/Vite marketing site
+    public/             Static SEO and social assets
+    src/components/     Reusable UI components
+    src/i18n/           Explicit Spanish and English copy
+    src/lib/            Site and release configuration
+```
+
+## Local Development
 
 ```bash
+cd landing
 npm install
 npm run dev
 ```
 
-## Cloudflare Pages
+## Production Build
 
-- Framework preset: `Vite`
-- Build command: `npm run build`
-- Build output directory: `dist`
-- Node.js: `22` o superior
+```bash
+npm run build
+```
 
-Los datos de lanzamiento futuros están aislados en `src/lib/site-config.ts`. La interfaz no depende todavía de ninguna petición de red. Allí quedan preparados `androidDownloadUrl` y `windowsDownloadUrl` para conectarlos manualmente más adelante.
+For Cloudflare Pages, use `npm run build` as the build command and `dist` as the output directory.
 
-## Recursos reemplazables
+## Downloads
 
-- Logo: `src/components/BrandMark.tsx`
-- Vista de producto del hero: `src/components/HeroPreview.tsx`
-- Textos, enlaces de descarga y datos de lanzamiento: `src/lib/site-config.ts`
+Platform download URLs are intentionally isolated in `src/lib/site-config.ts`:
+
+```ts
+releaseConfig.androidDownloadUrl
+releaseConfig.windowsDownloadUrl
+```
+
+Set either value to `null` to hide its corresponding download action. This landing does not fetch release information at runtime.
+
+## Disclaimer
+
+DoBre is an independent project and is not affiliated with, associated with, or endorsed by Mercado Libre. It uses public information and user-selected settings to generate estimates. Mercado Libre is a registered trademark of its respective owner. Always verify the current official conditions before listing.
+
+## Roadmap
+
+- Replace placeholder visuals with final product screenshots and branding assets.
+- Connect release metadata through the existing configuration boundary.
+- Extend product documentation as distribution channels grow.
+
+## License
+
+No license has been published for this repository yet. All rights are reserved unless a future license states otherwise.

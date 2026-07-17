@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="brand" x1="64" y1="34" x2="1138" y2="589" gradientUnits="userSpaceOnUse"><stop stop-color="#0f766e"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="52"/></filter>
+  </defs>
+  <rect width="1200" height="630" fill="#09111f"/>
+  <circle cx="900" cy="110" r="205" fill="#0f766e" fill-opacity=".42" filter="url(#blur)"/>
+  <circle cx="1030" cy="525" r="235" fill="#2563eb" fill-opacity=".36" filter="url(#blur)"/>
+  <rect x="68" y="56" width="60" height="60" rx="18" fill="url(#brand)"/>
+  <path fill="#fff" d="M89 74h9.8c7.1 0 11.5 4.9 11.5 12s-4.4 12-11.5 12H89V74Zm9.4 17.5c3.1 0 4.9-2 4.9-5.5s-1.8-5.5-4.9-5.5h-2.7v11h2.7Z"/>
+  <text x="144" y="96" fill="#edf3fb" font-family="Arial, sans-serif" font-size="31" font-weight="700">DoBre</text>
+  <text x="68" y="250" fill="#edf3fb" font-family="Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-3">Tell us what you want to receive.</text>
+  <text x="68" y="340" fill="url(#brand)" font-family="Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-3">DoBre calculates what to list for.</text>
+  <text x="72" y="418" fill="#a9b6c9" font-family="Arial, sans-serif" font-size="30">Suggested prices for Mercado Libre listings.</text>
+  <rect x="817" y="374" width="302" height="170" rx="28" fill="#101a2b" stroke="#26354b"/>
+  <text x="850" y="420" fill="#a9b6c9" font-family="Arial, sans-serif" font-size="18" font-weight="700">SUGGESTED PRICE</text>
+  <text x="850" y="485" fill="#edf3fb" font-family="Arial, sans-serif" font-size="54" font-weight="700">$ 63,619</text>
+</svg>

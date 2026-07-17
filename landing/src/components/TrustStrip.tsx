@@ -1,33 +1,21 @@
-const signals = [
-  {
-    title: 'Categorías reales',
-    description: 'Elegí el tipo de producto que vas a publicar.',
-    icon: <CategoryIcon />,
-  },
-  {
-    title: 'Cuotas y envío',
-    description: 'Simulá las decisiones que cambian el resultado.',
-    icon: <SlidersIcon />,
-  },
-  {
-    title: 'Configuración actualizable',
-    description: 'Datos preparados para mantenerse al día.',
-    icon: <RefreshIcon />,
-  },
-]
+import { useLanguage } from '../i18n/LanguageProvider'
+
+const icons = [<CategoryIcon key="category" />, <SlidersIcon key="sliders" />, <RefreshIcon key="refresh" />]
 
 export function TrustStrip() {
+  const { copy } = useLanguage()
+
   return (
-    <section className="relative z-10 border-y border-line bg-surface/70" aria-label="Características de DoBre">
+    <section className="relative z-10 border-y border-line bg-surface/70" aria-label={copy.trust.label}>
       <div className="mx-auto grid max-w-7xl divide-y divide-line px-5 sm:px-8 md:grid-cols-3 md:divide-x md:divide-y-0 lg:px-10">
-        {signals.map((signal) => (
-          <article key={signal.title} className="group flex items-center gap-4 px-1 py-6 sm:px-5 md:px-8 md:py-8">
+        {copy.trust.items.map(([title, description], index) => (
+          <article key={title} className="group flex items-center gap-4 px-1 py-6 sm:px-5 md:px-8 md:py-8">
             <span className="grid size-11 shrink-0 place-items-center rounded-2xl border border-line bg-surface-raised text-teal transition duration-300 group-hover:-translate-y-1 group-hover:shadow-card">
-              {signal.icon}
+              {icons[index]}
             </span>
             <div>
-              <h3 className="text-sm font-extrabold tracking-[-0.025em] text-ink">{signal.title}</h3>
-              <p className="mt-1 text-sm leading-5 text-muted">{signal.description}</p>
+              <h3 className="text-sm font-extrabold tracking-[-0.025em] text-ink">{title}</h3>
+              <p className="mt-1 text-sm leading-5 text-muted">{description}</p>
             </div>
           </article>
         ))}

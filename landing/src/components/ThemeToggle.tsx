@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLanguage } from '../i18n/LanguageProvider'
 
 type Theme = 'light' | 'dark'
 
@@ -16,6 +17,7 @@ function getInitialTheme(): Theme {
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
+  const { copy } = useLanguage()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -28,7 +30,7 @@ export function ThemeToggle() {
     <button
       className="grid size-10 place-items-center rounded-full border border-line bg-surface text-muted transition duration-200 hover:-translate-y-0.5 hover:bg-surface-raised hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
       type="button"
-      aria-label={isDark ? 'Activar modo claro' : 'Activar modo oscuro'}
+      aria-label={isDark ? copy.nav.themeToLight : copy.nav.themeToDark}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
       {isDark ? <SunIcon /> : <MoonIcon />}

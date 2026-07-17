@@ -3,7 +3,7 @@ export const siteConfig = {
   description:
     'Indicá cuánto querés recibir y DoBre calcula el precio sugerido para tu publicación de Mercado Libre.',
   links: {
-    download: '#descargar',
+    downloads: '#descargas',
     howItWorks: '#como-funciona',
     simulator: '#simulador',
   },
@@ -32,8 +32,4 @@ export const releaseConfig: ReleaseConfig = {
     'https://github.com/NaniLabs/DoBre/releases/download/DoBre/DoBreSetup-v0.3.0.exe',
 
   maintenanceMode: false,
-}
-
-export function getPrimaryDownloadUrl(): string {
-  return releaseConfig.androidDownloadUrl ?? siteConfig.links.download
 }

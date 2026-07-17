@@ -111,6 +111,29 @@ body {
 
 .nav-link:hover { color: var(--ink); }
 
+.language-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: 0.2rem;
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.language-selector button {
+  border-radius: 999px;
+  padding: 0.36rem 0.43rem;
+  color: inherit;
+  line-height: 1;
+}
+
+.language-selector button.is-active { background: var(--teal-soft); color: var(--teal); }
+
 .mobile-link {
   border-radius: 0.9rem;
   padding: 0.8rem 0.9rem;
@@ -146,6 +169,36 @@ body {
 
 .button-primary:hover { box-shadow: 0 17px 32px rgba(15, 118, 110, 0.28); }
 .button-secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.download-button { min-width: 13.4rem; }
+
+.install-tutorial {
+  margin-top: 0.85rem;
+  max-width: 38rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.install-tutorial summary {
+  display: flex;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.install-tutorial-content { padding: 0 1rem 1rem; }
+.install-tutorial-content p { margin: 0; }
+.install-tutorial-content ol { margin: 0.8rem 0; padding-left: 1.25rem; }
+.install-tutorial-content li + li { margin-top: 0.42rem; }
+.install-note { display: flex; gap: 0.45rem; border-top: 1px solid var(--line); padding-top: 0.8rem; }
 
 .flow-line {
   height: 1px;

@@ -3,6 +3,7 @@ import { HowItWorks } from './components/HowItWorks'
 import { Navigation } from './components/Navigation'
 import { DemoSimulator } from './components/DemoSimulator'
 import { Faq } from './components/Faq'
+import { Footer } from './components/Footer'
 import { IndependenceNotice } from './components/IndependenceNotice'
 import { TrustStrip } from './components/TrustStrip'
 
@@ -18,6 +19,7 @@ function App() {
         <Faq />
         <IndependenceNotice />
       </main>
+      <Footer />
     </div>
   )
 }

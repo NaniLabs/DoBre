@@ -1,0 +1,412 @@
+{
+  "version": "2026.07.17",
+  "lastUpdate": "2026-07-17T00:00:00Z",
+  "message": null,
+  "maintenanceMode": false,
+  "minimumSupportedVersion": "0.1.1",
+  "publicationTypes": [
+    {
+      "id": "classic",
+      "name": "Clásica"
+    },
+    {
+      "id": "premium",
+      "name": "Premium"
+    }
+  ],
+  "tariffs": {
+    "sellerFeeRate": 0.17,
+    "unitCostBelowThreshold": 2800.0
+  },
+  "percentages": {
+    "sellerFeeRate": 0.17
+  },
+  "fixedCharges": [
+    {
+      "maxPrice": 12000,
+      "charge": 900
+    },
+    {
+      "maxPrice": 33000,
+      "charge": 1800
+    },
+    {
+      "maxPrice": null,
+      "charge": 0
+    }
+  ],
+  "shipping": {
+    "freeShippingThreshold": 33000.0,
+    "weightTable": [
+      {
+        "maxWeight": 0.3,
+        "below33000": 7868,
+        "between33000And49999": 5620,
+        "above50000": 6080
+      },
+      {
+        "maxWeight": 0.5,
+        "below33000": 8596,
+        "between33000And49999": 6140,
+        "above50000": 6600
+      },
+      {
+        "maxWeight": 1,
+        "below33000": 9800,
+        "between33000And49999": 7000,
+        "above50000": 7470
+      },
+      {
+        "maxWeight": 1.5,
+        "below33000": 10122,
+        "between33000And49999": 7230,
+        "above50000": 7720
+      },
+      {
+        "maxWeight": 2,
+        "below33000": 10458,
+        "between33000And49999": 7470,
+        "above50000": 7970
+      },
+      {
+        "maxWeight": 3,
+        "below33000": 11550,
+        "between33000And49999": 8250,
+        "above50000": 8710
+      },
+      {
+        "maxWeight": 4,
+        "below33000": 12866,
+        "between33000And49999": 9190,
+        "above50000": 9860
+      },
+      {
+        "maxWeight": 5,
+        "below33000": 14070,
+        "between33000And49999": 10050,
+        "above50000": 10760
+      },
+      {
+        "maxWeight": 8,
+        "below33000": 15512,
+        "between33000And49999": 11080,
+        "above50000": 11830
+      },
+      {
+        "maxWeight": 10,
+        "below33000": 16926,
+        "between33000And49999": 12090,
+        "above50000": 12840
+      },
+      {
+        "maxWeight": 13,
+        "below33000": 18270,
+        "between33000And49999": 13050,
+        "above50000": 13920
+      },
+      {
+        "maxWeight": 15,
+        "below33000": 19684,
+        "between33000And49999": 14060,
+        "above50000": 14930
+      },
+      {
+        "maxWeight": 20,
+        "below33000": 23506,
+        "between33000And49999": 16790,
+        "above50000": 17830
+      },
+      {
+        "maxWeight": 25,
+        "below33000": 28182,
+        "between33000And49999": 20130,
+        "above50000": 21420
+      },
+      {
+        "maxWeight": 30,
+        "below33000": 38780,
+        "between33000And49999": 27700,
+        "above50000": 29410
+      },
+      {
+        "maxWeight": 40,
+        "below33000": 44268,
+        "between33000And49999": 31620,
+        "above50000": 33570
+      },
+      {
+        "maxWeight": 50,
+        "below33000": 46802,
+        "between33000And49999": 33430,
+        "above50000": 35490
+      },
+      {
+        "maxWeight": 60,
+        "below33000": 51996,
+        "between33000And49999": 37140,
+        "above50000": 39610
+      },
+      {
+        "maxWeight": 70,
+        "below33000": 54068,
+        "between33000And49999": 38620,
+        "above50000": 41290
+      },
+      {
+        "maxWeight": 80,
+        "below33000": 62524,
+        "between33000And49999": 44660,
+        "above50000": 47850
+      },
+      {
+        "maxWeight": 90,
+        "below33000": 77308,
+        "between33000And49999": 55220,
+        "above50000": 59180
+      },
+      {
+        "maxWeight": 100,
+        "below33000": 89152,
+        "between33000And49999": 63680,
+        "above50000": 68230
+      },
+      {
+        "maxWeight": 120,
+        "below33000": 97328,
+        "between33000And49999": 69520,
+        "above50000": 74490
+      },
+      {
+        "maxWeight": 140,
+        "below33000": 109592,
+        "between33000And49999": 78280,
+        "above50000": 83890
+      },
+      {
+        "maxWeight": 160,
+        "below33000": 121870,
+        "between33000And49999": 87050,
+        "above50000": 93280
+      },
+      {
+        "maxWeight": 180,
+        "below33000": 134120,
+        "between33000And49999": 95800,
+        "above50000": 102660
+      },
+      {
+        "maxWeight": 999999,
+        "below33000": 146398,
+        "between33000And49999": 104570,
+        "above50000": 112060
+      }
+    ]
+  },
+  "installments": {
+    "defaultOptionId": "5",
+    "options": [
+      {
+        "id": "0",
+        "label": "3-12 con interes",
+        "rate": 0.05
+      },
+      {
+        "id": "1",
+        "label": "3 sin interes",
+        "rate": 0.084
+      },
+      {
+        "id": "2",
+        "label": "6 sin interes",
+        "rate": 0.123
+      },
+      {
+        "id": "3",
+        "label": "9 sin interes",
+        "rate": 0.157
+      },
+      {
+        "id": "4",
+        "label": "12 sin interes",
+        "rate": 0.192
+      },
+      {
+        "id": "5",
+        "label": "Sin cuotas",
+        "rate": 0.0
+      }
+    ]
+  },
+  "categories": [
+    {
+      "id": "vehicle_accessories",
+      "name": "Accesorios para Vehículos",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "food_and_beverages",
+      "name": "Alimentos y Bebidas",
+      "fees": {
+        "classic": 0.118,
+        "premium": 0.148
+      }
+    },
+    {
+      "id": "babies",
+      "name": "Bebés",
+      "fees": {
+        "classic": 0.135,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "beauty",
+      "name": "Belleza y Cuidado Personal",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "cellphones",
+      "name": "Celulares y Telefonía",
+      "fees": {
+        "classic": 0.13,
+        "premium": 0.165
+      }
+    },
+    {
+      "id": "computing",
+      "name": "Computación",
+      "fees": {
+        "classic": 0.15,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "videogames",
+      "name": "Consolas y Videojuegos",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "sports",
+      "name": "Deportes y Fitness",
+      "fees": {
+        "classic": 0.135,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "appliances",
+      "name": "Electrodomésticos",
+      "fees": {
+        "classic": 0.13,
+        "premium": 0.165
+      }
+    },
+    {
+      "id": "electronics",
+      "name": "Electrónica, Audio y Video",
+      "fees": {
+        "classic": 0.15,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "tools",
+      "name": "Herramientas",
+      "fees": {
+        "classic": 0.135,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "home",
+      "name": "Hogar, Muebles y Jardín",
+      "fees": {
+        "classic": 0.13,
+        "premium": 0.165
+      }
+    },
+    {
+      "id": "fashion",
+      "name": "Indumentaria y Accesorios",
+      "fees": {
+        "classic": 0.135,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "industry",
+      "name": "Industrias y Oficinas",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "toys",
+      "name": "Juegos y Juguetes",
+      "fees": {
+        "classic": 0.135,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "books",
+      "name": "Libros, Revistas y Comics",
+      "fees": {
+        "classic": 0.145,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "music",
+      "name": "Música, Películas y Series",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "health",
+      "name": "Salud y Equipamiento Médico",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "services",
+      "name": "Servicios",
+      "fees": {
+        "classic": 0.14,
+        "premium": 0.1714
+      }
+    },
+    {
+      "id": "supermarket",
+      "name": "Supermercado",
+      "fees": {
+        "classic": 0.118,
+        "premium": 0.148
+      }
+    }
+  ],
+  "advancedMode": {
+    "enabledByDefault": false,
+    "parameters": {
+      "notes": "Los overrides locales del modo avanzado no alteran la configuracion remota descargada."
+    }
+  },
+  "input": {
+    "minAllowedPrice": 1000.0,
+    "maxAllowedPrice": 999999999.0
+  }
+}

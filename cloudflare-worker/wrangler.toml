@@ -1,0 +1,21 @@
+# 1. Instalar dependencias:
+#    npm install
+#
+# 2. Login en Cloudflare:
+#    npx wrangler login
+#
+# 3. Desarrollo local:
+#    npm run dev
+#
+# 4. Despliegue a produccion:
+#    npm run deploy
+#
+# 5. URL esperada por Flutter:
+#    https://<tu-worker>.<tu-subdominio>.workers.dev/config
+
+name = "dobre-config-worker"
+main = "src/index.ts"
+compatibility_date = "2026-07-17"
+
+[observability]
+enabled = true

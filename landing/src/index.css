@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --shadow-card: 0 18px 36px rgba(15, 23, 42, 0.12);
+  --shadow-panel: 0 24px 50px rgba(15, 23, 42, 0.18);
+}
+
+:root {
+  color-scheme: light;
+  --canvas: #f6f8fb;
+  --surface: #ffffff;
+  --surface-raised: #f9fbfd;
+  --ink: #132033;
+  --muted: #5c687a;
+  --line: #dfe7f0;
+  --teal: #0f766e;
+  --teal-soft: #e2f5f1;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #09111f;
+  --surface: #101a2b;
+  --surface-raised: #162033;
+  --ink: #edf3fb;
+  --muted: #a9b6c9;
+  --line: #26354b;
+  --teal: #5eead4;
+  --teal-soft: #103b3a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--canvas);
+  font-family: "Manrope", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+::selection { background: color-mix(in srgb, var(--teal) 24%, transparent); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1.25rem;
+  top: -5rem;
+  z-index: 30;
+  border-radius: 0.75rem;
+  background: var(--ink);
+  padding: 0.7rem 0.9rem;
+  color: var(--canvas);
+  font-size: 0.8rem;
+  font-weight: 800;
+  transition: top 160ms ease;
+}
+
+.skip-link:focus { top: 1rem; }
+
+.hero-grid {
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--line) 42%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--line) 42%, transparent) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 82%);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #0f766e 10%, #2563eb 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  padding: 0.45rem 0.75rem;
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.nav-link {
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: color 160ms ease;
+}
+
+.nav-link:hover { color: var(--ink); }
+
+.mobile-link {
+  border-radius: 0.9rem;
+  padding: 0.8rem 0.9rem;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.mobile-link:hover { background: var(--canvas); }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.button:hover { transform: translateY(-2px); }
+.button-small { padding: 0.78rem 1rem; }
+.button-large { min-height: 3.6rem; padding: 0.95rem 1.3rem; }
+
+.button-primary {
+  background: linear-gradient(135deg, #0f766e, #177bba);
+  color: #f8fffd;
+  box-shadow: 0 13px 24px rgba(15, 118, 110, 0.2);
+}
+
+.button-primary:hover { box-shadow: 0 17px 32px rgba(15, 118, 110, 0.28); }
+.button-secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+
+.flow-line {
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--line) 0 5px, transparent 5px 11px);
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  padding: 0.85rem 1rem;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.field-input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 16%, transparent);
+}
+
+.money-input { font-size: 1.25rem; letter-spacing: -0.03em; }
+.select-wrap { position: relative; }
+
+.shipping-control {
+  display: flex;
+  min-height: 3.45rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  padding: 0.7rem 0.85rem 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.shipping-control:has(input:focus-visible) { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+.switch-track {
+  display: flex;
+  width: 2.7rem;
+  height: 1.55rem;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--line);
+  padding: 0.18rem;
+  transition: background-color 180ms ease;
+}
+
+.switch-thumb {
+  display: block;
+  width: 1.19rem;
+  height: 1.19rem;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+  transition: transform 180ms ease;
+}
+
+.shipping-control:has(input:checked) .switch-track { background: var(--teal); }
+.shipping-control:has(input:checked) .switch-thumb { transform: translateX(1.14rem); }
+
+.animate-enter { animation: enter 650ms cubic-bezier(.2,.8,.2,1) both; }
+.animate-enter-delayed { animation: enter 750ms 130ms cubic-bezier(.2,.8,.2,1) both; }
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-enter, .animate-enter-delayed { animation: none; }
+  .button, .nav-link { transition: none; }
+  .switch-track, .switch-thumb { transition: none; }
+  .skip-link { transition: none; }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f8fb" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="application-name" content="DoBre" />
+    <meta name="author" content="Nani" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="description" content="Indicá cuánto querés recibir y DoBre calcula el precio sugerido para tu publicación de Mercado Libre." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://dobre.app/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="DoBre" />
+    <meta property="og:title" content="DoBre | Publicá al precio correcto" />
+    <meta property="og:description" content="Indicá cuánto querés recibir y DoBre calcula el precio sugerido para tu publicación de Mercado Libre." />
+    <meta property="og:url" content="https://dobre.app/" />
+    <meta property="og:image" content="https://dobre.app/og-image.svg" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:alt" content="DoBre calcula el precio sugerido para tu publicación" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DoBre | Publicá al precio correcto" />
+    <meta name="twitter:description" content="Indicá cuánto querés recibir y DoBre calcula el precio sugerido para tu publicación de Mercado Libre." />
+    <meta name="twitter:image" content="https://dobre.app/og-image.svg" />
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem('dobre-theme');
+        const theme = savedTheme === 'light' || savedTheme === 'dark'
+          ? savedTheme
+          : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <title>DoBre | Publicá al precio correcto</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

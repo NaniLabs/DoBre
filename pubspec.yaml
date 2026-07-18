@@ -18,6 +18,18 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 version: 0.3.0+2
 
+# Single release source for Flutter builds and the landing at landing/.
+# Change only `version` for a new release. The landing derives asset URLs below.
+dobre_release:
+  github_release_base_url: https://github.com/NaniLabs/DoBre/releases/download/DoBre
+  android_asset_name: DoBre-v{version}.apk
+  windows_asset_name: DoBreSetup-v{version}.exe
+  linux_asset_name: null
+  macos_asset_name: null
+  web_app_url: https://dobre-v0-3-0.igforeversal.workers.dev/
+  changelog_url: https://github.com/NaniLabs/DoBre/releases/tag/DoBre
+  maintenance_mode: false
+
 environment:
   sdk: ^3.12.2
 
@@ -49,6 +61,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   msix: ^3.16.8
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -97,4 +110,3 @@ msix_config:
   display_name: DoBre
   publisher_display_name: Nani2204
   identity_name: com.nani2204.dobre
-  msix_version: 1.0.0.0

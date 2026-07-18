@@ -1,0 +1,15 @@
+{
+  "name": "DoBre",
+  "short_name": "DoBre",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f6f8fb",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/branding/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

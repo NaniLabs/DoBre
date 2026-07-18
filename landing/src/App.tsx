@@ -1,7 +1,7 @@
 import { Hero } from './components/Hero'
 import { HowItWorks } from './components/HowItWorks'
 import { Navigation } from './components/Navigation'
-import { DemoSimulator } from './components/DemoSimulator'
+import { WebExperience } from './components/WebExperience'
 import { Faq } from './components/Faq'
 import { Footer } from './components/Footer'
 import { IndependenceNotice } from './components/IndependenceNotice'
@@ -15,7 +15,7 @@ function App() {
         <Hero />
         <TrustStrip />
         <HowItWorks />
-        <DemoSimulator />
+        <WebExperience />
         <Faq />
         <IndependenceNotice />
       </main>

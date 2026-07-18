@@ -30,7 +30,7 @@ export function Navigation() {
 
       <nav className="hidden items-center gap-6 md:flex" aria-label={copy.nav.mainLabel}>
         <a className="nav-link" href={siteConfig.links.howItWorks}>{copy.nav.howItWorks}</a>
-        <a className="nav-link" href={siteConfig.links.simulator}>{copy.nav.simulator}</a>
+        <a className="nav-link" href={siteConfig.links.webExperience}>{copy.nav.webApp}</a>
         {hasDownloads && <a className="nav-link" href={siteConfig.links.downloads}>{copy.nav.downloads}</a>}
         <LanguageSelector />
         <ThemeToggle />
@@ -54,7 +54,7 @@ export function Navigation() {
       {isMenuOpen && (
         <nav id="mobile-navigation" className="absolute inset-x-5 top-[76px] grid gap-1 rounded-3xl border border-line bg-surface-raised p-3 shadow-panel md:hidden" aria-label={copy.nav.mobileLabel}>
           <a className="mobile-link" href={siteConfig.links.howItWorks} onClick={closeMenu}>{copy.nav.howItWorks}</a>
-          <a className="mobile-link" href={siteConfig.links.simulator} onClick={closeMenu}>{copy.nav.simulator}</a>
+          <a className="mobile-link" href={siteConfig.links.webExperience} onClick={closeMenu}>{copy.nav.webApp}</a>
           {hasDownloads && <a className="mobile-link" href={siteConfig.links.downloads} onClick={closeMenu}>{copy.nav.downloads}</a>}
           <div className="mt-2 px-1"><LanguageSelector /></div>
         </nav>

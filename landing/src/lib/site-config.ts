@@ -5,7 +5,7 @@ export const siteConfig = {
   links: {
     downloads: '#descargas',
     howItWorks: '#como-funciona',
-    simulator: '#simulador',
+    webExperience: '#version-web',
   },
 } as const
 
@@ -18,18 +18,10 @@ export interface ReleaseConfig {
   changelogUrl: string | null
   androidDownloadUrl: string | null
   windowsDownloadUrl: string | null
+  linuxDownloadUrl: string | null
+  macosDownloadUrl: string | null
+  webAppUrl: string | null
   maintenanceMode: boolean
 }
 
-export const releaseConfig: ReleaseConfig = {
-  version: 'v0.3.0',
-  changelogUrl: 'https://github.com/NaniLabs/DoBre/releases/tag/DoBre',
-
-  androidDownloadUrl:
-    'https://github.com/NaniLabs/DoBre/releases/download/DoBre/DoBre-v0.3.0.apk',
-
-  windowsDownloadUrl:
-    'https://github.com/NaniLabs/DoBre/releases/download/DoBre/DoBreSetup-v0.3.0.exe',
-
-  maintenanceMode: false,
-}
+export const releaseConfig: ReleaseConfig = __DOBRE_RELEASE_CONFIG__

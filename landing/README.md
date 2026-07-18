@@ -1,45 +1,18 @@
-# DoBre
+# DoBre Landing
 
-DoBre helps Mercado Libre sellers estimate a listing price from the amount they want to receive. It presents the key publication variables in a clear flow, so sellers can make faster and more informed pricing decisions.
+The official DoBre marketing site. It explains the product, offers the installed Android and Windows releases, and links visitors to the live Web application.
 
-## Features
+## Stack
 
-- Responsive bilingual landing in Spanish and English.
-- Persistent language and color-theme preferences.
-- Interactive price simulator for product discovery.
-- Platform-specific Android and Windows download actions.
-- Android installation guidance for GitHub Releases distribution.
-- Accessible navigation, keyboard support, and reduced-motion handling.
-- SEO, Open Graph, Twitter Card, sitemap, robots file, and social-share assets.
-
-## Screenshots
-
-Product screenshots will be added here when final branding assets are available.
-
-## Tech Stack
-
-- Flutter for the DoBre application.
-- React, Vite, TypeScript, and Tailwind CSS for this landing.
-- Cloudflare Pages for static hosting.
-- Cloudflare Workers for remote configuration consumed by the Flutter app.
-
-## Repository Structure
-
-```text
-dobre/
-  lib/                  Flutter application
-  cloudflare-worker/    Remote configuration worker
-  landing/              React/Vite marketing site
-    public/             Static SEO and social assets
-    src/components/     Reusable UI components
-    src/i18n/           Explicit Spanish and English copy
-    src/lib/            Site and release configuration
-```
+- React 19
+- Vite
+- TypeScript
+- Tailwind CSS
+- Cloudflare Pages
 
 ## Local Development
 
 ```bash
-cd landing
 npm install
 npm run dev
 ```
@@ -50,29 +23,28 @@ npm run dev
 npm run build
 ```
 
-For Cloudflare Pages, use `npm run build` as the build command and `dist` as the output directory.
+Deploy `dist/` to Cloudflare Pages.
 
-## Downloads
+## Release Data
 
-Platform download URLs are intentionally isolated in `src/lib/site-config.ts`:
+The landing does not duplicate release metadata. At build time, `vite.config.ts` reads the `dobre_release` block and `version` from the repository-level `pubspec.yaml`, then exposes a typed `releaseConfig` to components.
 
-```ts
-releaseConfig.androidDownloadUrl
-releaseConfig.windowsDownloadUrl
-```
+Update the version once in `pubspec.yaml`; Android and Windows URLs are built from the configured GitHub Release base URL and asset-name templates. Set an asset name to `null` to hide that platform automatically. The same configuration contains the Web app, changelog, maintenance state, and reserved Linux/macOS fields.
 
-Set either value to `null` to hide its corresponding download action. This landing does not fetch release information at runtime.
+## Branding
+
+All replaceable landing assets are in `public/branding/`:
+
+- `logo.svg`, `logo-dark.svg`, and `favicon.svg`
+- `icon.png` and `icon.ico`
+- `og-image.svg` and `og-image-en.svg`
+
+Replace files in place to update branding without changing component code.
+
+## SEO
+
+The site includes a manifest, canonical and alternate-language metadata, Open Graph and Twitter metadata, `robots.txt`, and `sitemap.xml`. The language provider synchronizes document language and localized social metadata when visitors change language.
 
 ## Disclaimer
 
-DoBre is an independent project and is not affiliated with, associated with, or endorsed by Mercado Libre. It uses public information and user-selected settings to generate estimates. Mercado Libre is a registered trademark of its respective owner. Always verify the current official conditions before listing.
-
-## Roadmap
-
-- Replace placeholder visuals with final product screenshots and branding assets.
-- Connect release metadata through the existing configuration boundary.
-- Extend product documentation as distribution channels grow.
-
-## License
-
-No license has been published for this repository yet. All rights are reserved unless a future license states otherwise.
+DoBre is an independent project and is not affiliated with, associated with, or endorsed by Mercado Libre. Always verify the current official conditions before listing.

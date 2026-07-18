@@ -1,6 +1,6 @@
 import { HeroPreview } from './HeroPreview'
 import { DownloadActions } from './DownloadActions'
-import { releaseConfig, siteConfig } from '../lib/site-config'
+import { releaseConfig } from '../lib/site-config'
 import { useLanguage } from '../i18n/LanguageProvider'
 
 export function Hero() {
@@ -19,8 +19,8 @@ export function Hero() {
           <p className="mt-7 max-w-xl text-pretty text-lg leading-8 text-muted sm:text-xl">
             {copy.hero.description}
           </p>
+          {releaseConfig.webAppUrl != null && <div className="mt-9 flex"><a className="button button-primary button-large" href={releaseConfig.webAppUrl} target="_blank" rel="noreferrer">{copy.hero.tryWeb} <ArrowIcon /></a></div>}
           <DownloadActions />
-          <div className="mt-3 flex"><a className="button button-secondary button-large" href={siteConfig.links.simulator}>{copy.hero.trySimulator} <DownIcon /></a></div>
           <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium text-muted">
             <span className="flex items-center gap-2"><CheckIcon /> {copy.hero.noSpreadsheets}</span>
             <span className="flex items-center gap-2"><CheckIcon /> {copy.hero.updatable}</span>
@@ -35,8 +35,8 @@ export function Hero() {
   )
 }
 
-function DownIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 5 5 5-5" /></svg>
+function ArrowIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10h12M11 5l5 5-5 5" /></svg>
 }
 
 function CheckIcon() {

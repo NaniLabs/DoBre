@@ -84,6 +84,29 @@ dart run flutter_launcher_icons
 
 The command updates Android, Windows, and Flutter Web icons. It does not modify the Inno Setup configuration.
 
+## OpenAI Tools Used
+
+This project was developed with extensive assistance from OpenAI tools during OpenAI Build Week.
+
+### Codex
+Codex was used throughout development to:
+- Refactor Flutter and React code.
+- Improve project architecture and code organization.
+- Simplify repetitive development tasks.
+- Help integrate Cloudflare Pages and Cloudflare Workers.
+- Improve deployment and release workflows.
+- Refine configuration management.
+
+### GPT-5.6
+GPT-5.6 was used to:
+- Brainstorm features and UX improvements.
+- Review technical decisions.
+- Improve English copy for the landing page.
+- Help prepare the project documentation.
+- Assist in preparing the Devpost submission and demo materials.
+
+The final implementation, architecture, testing, and project decisions were completed and reviewed by the project author.
+
 ## Disclaimer
 
 DoBre is an independent project and is not affiliated with, associated with, or endorsed by Mercado Libre. It uses public information and user-selected settings to produce estimates. Mercado Libre is a registered trademark of its respective owner. Always verify the current official conditions before listing.

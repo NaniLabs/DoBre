@@ -41,7 +41,7 @@ class CreditsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Versión 1.0.0 • Desarrollado por Nani',
+                              'Versión 1.0.1 • Desarrollado por Nani',
                               style: theme.textTheme.titleSmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),

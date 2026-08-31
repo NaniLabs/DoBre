@@ -1,4 +1,5 @@
 import 'package:dobre/models/app_config.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,17 +11,36 @@ class DonacionesSheet extends StatelessWidget {
   Future<void> _abrirLink(BuildContext context, String url, String concepto) async {
     final uri = Uri.parse(url);
     try {
-      final launched = await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
+      bool launched = false;
+      if (kIsWeb) {
+        // En Flutter Web, para abrir en una pestaña nueva sin ser bloqueado por el navegador
+        // ni fallar por 'LaunchMode.externalApplication', se utiliza webOnlyWindowName: '_blank'.
+        launched = await launchUrl(
+          uri,
+          mode: LaunchMode.platformDefault,
+          webOnlyWindowName: '_blank',
+        );
+      } else {
+        // En plataformas nativas (Windows, Android), externalApplication invoca el navegador del SO.
+        launched = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (!launched) {
+          launched = await launchUrl(
+            uri,
+            mode: LaunchMode.platformDefault,
+          );
+        }
+      }
+
       if (!launched && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('No se pudo abrir el link de $concepto.'),
             action: SnackBarAction(
               label: 'Reintentar',
-              onPressed: () => launchUrl(uri, mode: LaunchMode.platformDefault),
+              onPressed: () => _abrirLink(context, url, concepto),
             ),
           ),
         );

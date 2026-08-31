@@ -7,9 +7,16 @@ Write-Host "==========================================================" -Foregro
 Write-Host "        Verificación de Branding e Iconos Oficiales       " -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
+$pubspecContent = Get-Content -Path (Join-Path $workspaceRoot "pubspec.yaml") -Raw
+if ($pubspecContent -match 'version:\s*([^\s+]+)') {
+    $Version = $matches[1]
+} else {
+    $Version = "1.0.1"
+}
+
 # 1. Windows Executable & Installer
 $exePath = Join-Path $workspaceRoot "build\windows\x64\runner\Release\dobre.exe"
-$setupPath = Join-Path $workspaceRoot "dist\releases\DoBreSetup-v1.0.0.exe"
+$setupPath = Join-Path $workspaceRoot "dist\releases\DoBreSetup-v$Version.exe"
 
 if (Test-Path $exePath) {
     $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($exePath)
@@ -28,7 +35,7 @@ if (Test-Path $setupPath) {
 }
 
 # 2. Android APK Package Contents
-$apkPath = Join-Path $workspaceRoot "dist\releases\DoBre-v1.0.0.apk"
+$apkPath = Join-Path $workspaceRoot "dist\releases\DoBre-v$Version.apk"
 if (Test-Path $apkPath) {
     $zip = [System.IO.Compression.ZipFile]::OpenRead($apkPath)
     $resEntries = $zip.Entries | Where-Object { $_.FullName -like "res/*" -or $_.FullName -like "*icon*" }

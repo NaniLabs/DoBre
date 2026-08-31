@@ -58,6 +58,13 @@ if ($Clean) {
     Get-ChildItem -Path $OutputDir -File | Remove-Item -Force
 }
 
+# Sincronización de iconos oficiales de DoBre
+$generateIconsScript = Join-Path $ScriptDir "generate-icons.ps1"
+if (Test-Path $generateIconsScript) {
+    Write-Host "`n[+] Sincronizando iconos oficiales de DoBre..." -ForegroundColor Cyan
+    & powershell -ExecutionPolicy Bypass -File $generateIconsScript
+}
+
 # 2. Análisis y Tests de Flutter
 if (-not $SkipAnalyze) {
     Write-Host "`n[2/7] Ejecutando análisis estático (flutter analyze)..." -ForegroundColor Cyan

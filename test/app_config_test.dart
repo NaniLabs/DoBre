@@ -26,7 +26,10 @@ void main() {
       expect(config.input.minAllowedPrice, greaterThan(0));
       expect(config.input.maxAllowedPrice, greaterThan(config.input.minAllowedPrice));
       expect(config.donations.enabled, isTrue);
-      expect(config.donations.alias, 'dobre.app.mp');
+      expect(config.donations.cafeLink, 'https://mpago.la/1dBku5K');
+      expect(config.donations.apoyoLink, 'https://mpago.la/161b7Ax');
+      expect(config.donations.impulsoLink, 'https://mpago.la/185dDQH');
+      expect(config.donations.customLink, 'https://link.mercadopago.com.ar/nanilabs');
     });
 
     test('AppConfig roundtrip serialization produces identical model', () {

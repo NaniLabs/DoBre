@@ -411,15 +411,13 @@
   },
   "donations": {
     "enabled": true,
-    "alias": "dobre.app.mp",
-    "cvu": "",
     "title": "Apoyar el proyecto DoBre",
-    "description": "DoBre es una herramienta gratuita e independiente. Si te resulta útil para tus publicaciones, podés apoyar su desarrollo voluntariamente mediante Mercado Pago.",
+    "description": "DoBre es gratuito e independiente. Si querés apoyar su desarrollo, podés colaborar voluntariamente mediante Mercado Pago.",
     "links": {
-      "custom": null,
-      "preset1000": null,
-      "preset2500": null,
-      "preset5000": null
+      "cafe": "https://mpago.la/1dBku5K",
+      "apoyo": "https://mpago.la/161b7Ax",
+      "impulso": "https://mpago.la/185dDQH",
+      "custom": "https://link.mercadopago.com.ar/nanilabs"
     }
   }
 }

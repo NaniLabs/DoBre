@@ -1,11 +1,11 @@
 {
-    "name": "dobre",
-    "short_name": "dobre",
+    "name": "DoBre",
+    "short_name": "DoBre",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#f6f8fb",
     "theme_color": "#0f766e",
-    "description": "A new Flutter project.",
+    "description": "Calculadora y motor inverso de precios para vendedores de Mercado Libre.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

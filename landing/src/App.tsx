@@ -5,6 +5,7 @@ import { WebExperience } from './components/WebExperience'
 import { Faq } from './components/Faq'
 import { Footer } from './components/Footer'
 import { IndependenceNotice } from './components/IndependenceNotice'
+import { SupportSection } from './components/SupportSection'
 import { TrustStrip } from './components/TrustStrip'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <HowItWorks />
         <WebExperience />
         <Faq />
+        <SupportSection />
         <IndependenceNotice />
       </main>
       <Footer />

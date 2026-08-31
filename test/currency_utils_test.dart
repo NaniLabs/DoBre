@@ -15,10 +15,22 @@ void main() {
       expect(CurrencyUtils.format(35000.0, includeDecimals: true), '\$ 35.000');
     });
 
+    test('Formats exact user-specified amounts correctly', () {
+      expect(CurrencyUtils.format(1), '\$ 1');
+      expect(CurrencyUtils.format(10), '\$ 10');
+      expect(CurrencyUtils.format(100), '\$ 100');
+      expect(CurrencyUtils.format(1000), '\$ 1.000');
+      expect(CurrencyUtils.format(35000), '\$ 35.000');
+      expect(CurrencyUtils.format(35450.75, includeDecimals: true), '\$ 35.450,75');
+      expect(CurrencyUtils.format(500000), '\$ 500.000');
+      expect(CurrencyUtils.format(5000000), '\$ 5.000.000');
+    });
+
     test('Handles negative and special values gracefully', () {
       expect(CurrencyUtils.format(-500), '-\$ 500');
       expect(CurrencyUtils.format(double.nan), '\$ 0');
       expect(CurrencyUtils.format(double.infinity), '\$ 0');
+      expect(CurrencyUtils.format(double.negativeInfinity), '\$ 0');
     });
   });
 

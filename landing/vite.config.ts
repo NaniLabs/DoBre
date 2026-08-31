@@ -28,6 +28,27 @@ function readReleaseConfig() {
 
   const changelogUrl = (value('changelog_url') ?? 'https://github.com/NaniLabs/DoBre/releases/tag/v{version}')?.replace(/{version}/g, version)
 
+  let donations = {
+    enabled: true,
+    cafe: 'https://mpago.la/1dBku5K',
+    apoyo: 'https://mpago.la/161b7Ax',
+    impulso: 'https://mpago.la/185dDQH',
+    custom: 'https://link.mercadopago.com.ar/nanilabs',
+  }
+
+  try {
+    const rawConfig = JSON.parse(readFileSync(resolve(workspaceRoot, 'assets/config/default_config.json'), 'utf8'))
+    if (rawConfig.donations?.links) {
+      donations = {
+        enabled: rawConfig.donations.enabled ?? true,
+        cafe: rawConfig.donations.links.cafe ?? donations.cafe,
+        apoyo: rawConfig.donations.links.apoyo ?? donations.apoyo,
+        impulso: rawConfig.donations.links.impulso ?? donations.impulso,
+        custom: rawConfig.donations.links.custom ?? donations.custom,
+      }
+    }
+  } catch (_) {}
+
   return {
     version,
     androidDownloadUrl: assetUrl(value('android_asset_name') ?? 'DoBre-v{version}.apk'),
@@ -37,6 +58,7 @@ function readReleaseConfig() {
     webAppUrl: value('web_app_url'),
     changelogUrl,
     maintenanceMode: value('maintenance_mode') === 'true',
+    donations,
   }
 }
 

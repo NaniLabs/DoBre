@@ -862,7 +862,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       settings,
                                     ),
                               const SizedBox(height: 24),
-                              const Footer(),
+                              Footer(onOpenDonations: _openDonationsSheet),
                             ],
                           ),
                         ),

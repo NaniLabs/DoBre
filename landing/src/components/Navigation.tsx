@@ -32,6 +32,7 @@ export function Navigation() {
         <a className="nav-link" href={siteConfig.links.howItWorks}>{copy.nav.howItWorks}</a>
         <a className="nav-link" href={siteConfig.links.webExperience}>{copy.nav.webApp}</a>
         {hasDownloads && <a className="nav-link" href={siteConfig.links.downloads}>{copy.nav.downloads}</a>}
+        {releaseConfig.donations?.enabled && <a className="nav-link" href={siteConfig.links.support}>{copy.nav.support}</a>}
         <LanguageSelector />
         <ThemeToggle />
       </nav>
@@ -56,6 +57,7 @@ export function Navigation() {
           <a className="mobile-link" href={siteConfig.links.howItWorks} onClick={closeMenu}>{copy.nav.howItWorks}</a>
           <a className="mobile-link" href={siteConfig.links.webExperience} onClick={closeMenu}>{copy.nav.webApp}</a>
           {hasDownloads && <a className="mobile-link" href={siteConfig.links.downloads} onClick={closeMenu}>{copy.nav.downloads}</a>}
+          {releaseConfig.donations?.enabled && <a className="mobile-link" href={siteConfig.links.support} onClick={closeMenu}>{copy.nav.support}</a>}
           <div className="mt-2 px-1"><LanguageSelector /></div>
         </nav>
       )}

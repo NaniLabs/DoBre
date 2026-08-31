@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
-  const Footer({super.key});
+  const Footer({super.key, this.onOpenDonations});
+
+  final VoidCallback? onOpenDonations;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +30,27 @@ class Footer extends StatelessWidget {
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
           ),
+          if (onOpenDonations != null) ...[
+            const SizedBox(height: 10),
+            TextButton.icon(
+              onPressed: onOpenDonations,
+              style: TextButton.styleFrom(
+                foregroundColor: colorScheme.primary,
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                visualDensity: VisualDensity.compact,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: const Icon(Icons.volunteer_activism_rounded, size: 16),
+              label: const Text(
+                'Apoyar el proyecto',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12.5),
+              ),
+            ),
+          ],
         ],
       ),
     );
   }
 }
-

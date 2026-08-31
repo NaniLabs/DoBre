@@ -6,6 +6,7 @@ export const siteConfig = {
     downloads: '#descargas',
     howItWorks: '#como-funciona',
     webExperience: '#version-web',
+    support: '#apoyo',
   },
 } as const
 
@@ -22,6 +23,14 @@ export interface ReleaseConfig {
   macosDownloadUrl: string | null
   webAppUrl: string | null
   maintenanceMode: boolean
+  donations: {
+    enabled: boolean
+    cafe: string
+    apoyo: string
+    impulso: string
+    custom: string
+  }
 }
 
 export const releaseConfig: ReleaseConfig = __DOBRE_RELEASE_CONFIG__
+

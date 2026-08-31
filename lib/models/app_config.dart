@@ -613,61 +613,53 @@ class InputConfig {
 class DonationsConfig {
   const DonationsConfig({
     this.enabled = true,
-    this.alias = 'dobre.app.mp',
-    this.cvu = '',
-    this.title = 'Apoyar el proyecto DoBre',
+    this.title = '¿Te resultó útil DoBre?',
     this.description =
-        'DoBre es una herramienta gratuita e independiente. Si te resulta útil para tus publicaciones, podés apoyar su desarrollo voluntariamente mediante Mercado Pago.',
-    this.customPaymentLink,
-    this.preset1000Link,
-    this.preset2500Link,
-    this.preset5000Link,
+        'DoBre es gratuito e independiente. Si querés apoyar su desarrollo, podés colaborar voluntariamente mediante Mercado Pago.',
+    this.cafeLink = 'https://mpago.la/1dBku5K',
+    this.apoyoLink = 'https://mpago.la/161b7Ax',
+    this.impulsoLink = 'https://mpago.la/185dDQH',
+    this.customLink = 'https://link.mercadopago.com.ar/nanilabs',
   });
 
   final bool enabled;
-  final String alias;
-  final String cvu;
   final String title;
   final String description;
-  final String? customPaymentLink;
-  final String? preset1000Link;
-  final String? preset2500Link;
-  final String? preset5000Link;
+  final String cafeLink;
+  final String apoyoLink;
+  final String impulsoLink;
+  final String customLink;
 
   DonationsConfig copyWith({
     bool? enabled,
-    String? alias,
-    String? cvu,
     String? title,
     String? description,
-    String? customPaymentLink,
-    String? preset1000Link,
-    String? preset2500Link,
-    String? preset5000Link,
+    String? cafeLink,
+    String? apoyoLink,
+    String? impulsoLink,
+    String? customLink,
   }) {
     return DonationsConfig(
       enabled: enabled ?? this.enabled,
-      alias: alias ?? this.alias,
-      cvu: cvu ?? this.cvu,
       title: title ?? this.title,
       description: description ?? this.description,
-      customPaymentLink: customPaymentLink ?? this.customPaymentLink,
-      preset1000Link: preset1000Link ?? this.preset1000Link,
-      preset2500Link: preset2500Link ?? this.preset2500Link,
-      preset5000Link: preset5000Link ?? this.preset5000Link,
+      cafeLink: cafeLink ?? this.cafeLink,
+      apoyoLink: apoyoLink ?? this.apoyoLink,
+      impulsoLink: impulsoLink ?? this.impulsoLink,
+      customLink: customLink ?? this.customLink,
     );
   }
 
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
-    'alias': alias,
-    'cvu': cvu,
     'title': title,
     'description': description,
-    'customPaymentLink': customPaymentLink,
-    'preset1000Link': preset1000Link,
-    'preset2500Link': preset2500Link,
-    'preset5000Link': preset5000Link,
+    'links': {
+      'cafe': cafeLink,
+      'apoyo': apoyoLink,
+      'impulso': impulsoLink,
+      'custom': customLink,
+    },
   };
 
   factory DonationsConfig.fromJson(Map<String, dynamic> json) {
@@ -679,19 +671,21 @@ class DonationsConfig {
 
     return DonationsConfig(
       enabled: json['enabled'] as bool? ?? true,
-      alias: json['alias']?.toString() ?? 'dobre.app.mp',
-      cvu: json['cvu']?.toString() ?? '',
-      title: json['title']?.toString() ?? 'Apoyar el proyecto DoBre',
+      title: json['title']?.toString() ?? '¿Te resultó útil DoBre?',
       description: json['description']?.toString() ??
-          'DoBre es una herramienta gratuita e independiente. Si te resulta útil para tus publicaciones, podés apoyar su desarrollo voluntariamente mediante Mercado Pago.',
-      customPaymentLink: json['customPaymentLink']?.toString() ??
-          links?['custom']?.toString(),
-      preset1000Link: json['preset1000Link']?.toString() ??
-          links?['preset1000']?.toString(),
-      preset2500Link: json['preset2500Link']?.toString() ??
-          links?['preset2500']?.toString(),
-      preset5000Link: json['preset5000Link']?.toString() ??
-          links?['preset5000']?.toString(),
+          'DoBre es gratuito e independiente. Si querés apoyar su desarrollo, podés colaborar voluntariamente mediante Mercado Pago.',
+      cafeLink: links?['cafe']?.toString() ??
+          json['cafeLink']?.toString() ??
+          'https://mpago.la/1dBku5K',
+      apoyoLink: links?['apoyo']?.toString() ??
+          json['apoyoLink']?.toString() ??
+          'https://mpago.la/161b7Ax',
+      impulsoLink: links?['impulso']?.toString() ??
+          json['impulsoLink']?.toString() ??
+          'https://mpago.la/185dDQH',
+      customLink: links?['custom']?.toString() ??
+          json['customLink']?.toString() ??
+          'https://link.mercadopago.com.ar/nanilabs',
     );
   }
 }

@@ -85,15 +85,14 @@ export interface InputConfig {
 
 export interface DonationsConfig {
   enabled: boolean;
-  alias: string;
-  cvu: string;
   title: string;
   description: string;
-  links?: {
-    custom?: string | null;
-    preset1000?: string | null;
-    preset2500?: string | null;
-    preset5000?: string | null;
+  links: {
+    cafe: string;
+    apoyo: string;
+    impulso: string;
+    custom: string;
   };
 }
+
 

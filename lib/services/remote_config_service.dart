@@ -17,13 +17,20 @@ class RemoteConfigService {
   final Uri _uri;
 
   Future<Map<String, dynamic>> fetchConfig() async {
-    final response = await _client.get(
-      _uri,
-      headers: const {
-        'accept': 'application/json',
-        'cache-control': 'no-cache',
-      },
-    );
+    final response = await _client
+        .get(
+          _uri,
+          headers: const {
+            'accept': 'application/json',
+            'cache-control': 'no-cache',
+          },
+        )
+        .timeout(
+          const Duration(seconds: 7),
+          onTimeout: () => throw const RemoteConfigException(
+            'Remote config request timed out after 7 seconds.',
+          ),
+        );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       throw RemoteConfigException(

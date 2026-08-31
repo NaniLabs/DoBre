@@ -45,10 +45,14 @@ class _AdvancedModeScreenState extends State<AdvancedModeScreen> {
 
   Future<void> _save() async {
     final provider = context.read<AdvancedModeProvider>();
+    final parsedWeight = (_parseDouble(_weightController.text) ?? 1.0).clamp(
+      0.01,
+      9999.0,
+    );
     final options = CalculationOptions(
       categoryId: _categoryId,
       publicationTypeId: _publicationTypeId,
-      weightKg: _parseDouble(_weightController.text) ?? 1.0,
+      weightKg: parsedWeight,
       installmentOptionId: _installmentOptionId,
       freeShipping: _freeShipping,
     );
@@ -63,9 +67,10 @@ class _AdvancedModeScreenState extends State<AdvancedModeScreen> {
       return;
     }
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Modo avanzado actualizado')));
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Modo avanzado actualizado y aplicado')),
+    );
   }
 
   @override

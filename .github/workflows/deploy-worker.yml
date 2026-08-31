@@ -1,0 +1,41 @@
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'cloudflare-worker/**'
+      - 'assets/config/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Worker to Cloudflare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check Cloudflare Token
+        id: check-secret
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "has_token=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_token=false" >> $GITHUB_OUTPUT
+            echo "::warning ::CLOUDFLARE_API_TOKEN secret not configured in GitHub Repository Secrets. Skipping automated deploy."
+          fi
+
+      - name: Deploy Worker via Wrangler
+        if: steps.check-secret.outputs.has_token == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'cloudflare-worker'
+          command: deploy

@@ -1,5 +1,6 @@
 import 'package:dobre/models/app_config.dart';
 import 'package:dobre/providers/theme_provider.dart';
+import 'package:dobre/widgets/donaciones_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,21 @@ class ConfiguracionSheet extends StatelessWidget {
 
   final AppConfig? config;
 
+  void _abrirDonaciones(BuildContext context) {
+    Navigator.of(context).pop();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: false,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (_) => DonacionesSheet(
+        donationsConfig: config?.donations ?? const DonationsConfig(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = context.watch<ThemeProvider>();
@@ -15,7 +31,7 @@ class ConfiguracionSheet extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,12 +48,12 @@ class ConfiguracionSheet extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "Configuracion",
+              "Ajustes",
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             SwitchListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -51,21 +67,40 @@ class ConfiguracionSheet extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             ListTile(
-              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              tileColor: colorScheme.surfaceContainerHighest.withValues(
+                alpha: 0.35,
+              ),
+              leading: Icon(
+                Icons.volunteer_activism_rounded,
+                color: colorScheme.primary,
+              ),
+              title: const Text("Apoyar a DoBre"),
+              subtitle: const Text("Colaborá voluntariamente con el proyecto"),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => _abrirDonaciones(context),
+            ),
+            const SizedBox(height: 12),
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               leading: CircleAvatar(
                 backgroundColor: colorScheme.surfaceContainerHighest,
                 foregroundColor: colorScheme.secondary,
-                child: const Icon(Icons.info_outline_rounded),
+                child: const Icon(Icons.cloud_done_rounded, size: 20),
               ),
-              title: const Text("Configuracion remota"),
+              title: const Text("Configuración de tarifas"),
               subtitle: Text(
-                config == null ? "Cargando..." : "Version ${config!.version}",
+                config == null
+                    ? "Cargando..."
+                    : "Versión ${config!.version} (Actualizable)",
               ),
             ),
-            const SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
 }
+

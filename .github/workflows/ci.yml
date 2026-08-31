@@ -1,0 +1,64 @@
+name: CI - Test & Quality Checks
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  flutter-checks:
+    name: Flutter Tests & Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Analyzer
+        run: flutter analyze
+
+      - name: Run Flutter Tests
+        run: flutter test --coverage
+
+  web-and-worker-checks:
+    name: Worker & Landing Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            cloudflare-worker/package-lock.json
+            landing/package-lock.json
+
+      - name: Check Cloudflare Worker
+        run: |
+          cd cloudflare-worker
+          npm ci || npm install
+          npm run check
+
+      - name: Build Landing Page
+        run: |
+          cd landing
+          npm ci || npm install
+          npm run build

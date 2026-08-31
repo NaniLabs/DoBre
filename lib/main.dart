@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dobre/models/app_config.dart';
+import 'package:dobre/models/calculation_breakdown.dart';
 import 'package:dobre/models/calculation_options.dart';
 import 'package:dobre/models/calculator_settings.dart';
 import 'package:dobre/providers/advanced_mode_provider.dart';
@@ -13,10 +14,12 @@ import 'package:dobre/screens/credits_screen.dart';
 import 'package:dobre/services/pricing_calculator.dart';
 import 'package:dobre/services/remote_config_service.dart';
 import 'package:dobre/theme/app_theme.dart';
+import 'package:dobre/utils/currency_utils.dart';
 import 'package:dobre/widgets/boton_calcular.dart';
 import 'package:dobre/widgets/category_selector.dart';
 import 'package:dobre/widgets/configuracion_sheet.dart';
 import 'package:dobre/widgets/cuotas_dropdown.dart';
+import 'package:dobre/widgets/donaciones_sheet.dart';
 import 'package:dobre/widgets/envio_switch.dart';
 import 'package:dobre/widgets/footer.dart';
 import 'package:dobre/widgets/precio_textfield.dart';
@@ -47,7 +50,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         Provider.value(value: const PricingCalculator()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(preferences)),
         ChangeNotifierProvider(
           create: (_) => AppConfigProvider(appConfigRepository)..initialize(),
         ),
@@ -94,6 +97,7 @@ enum _HomeMenuAction {
   normalMode,
   advancedMode,
   openAdvancedSettings,
+  openDonations,
   openCredits,
   openSettings,
 }
@@ -116,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _eggTutucaSeen = false;
   bool _eggThresholdSeen = false;
   double precio = 0.0;
+  CalculationBreakdown? _breakdown;
 
   AppConfig? get _configOrNull => context.read<AppConfigProvider>().config;
 
@@ -146,20 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
       installmentOptionId: installmentOptionId,
       freeShipping: envioGratis,
     );
-  }
-
-  CalculationOptions? _effectiveOptionsOrNull() {
-    final config = _configOrNull;
-    if (config == null) {
-      return null;
-    }
-
-    final advancedProvider = context.read<AdvancedModeProvider>();
-    if (advancedProvider.enabled) {
-      return advancedProvider.resolveOptions(config);
-    }
-
-    return _buildNormalModeOptions(config);
   }
 
   void _ensureInitialSelections(AppConfig config) {
@@ -203,14 +194,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void buscarMejorPrecio() {
     final settings = _effectiveSettingsOrNull();
-    final options = _effectiveOptionsOrNull();
-    if (settings == null || options == null) {
+    final config = _configOrNull;
+    if (settings == null || config == null) {
       return;
     }
 
+    if (precio <= 0) {
+      setState(() {
+        precioML = 0.0;
+        _breakdown = null;
+      });
+      return;
+    }
+
+    final isAdvanced = context.read<AdvancedModeProvider>().enabled;
     final calculator = context.read<PricingCalculator>();
 
-    final optimalPrice = calculator.findOptimalPrice(
+    var options = isAdvanced
+        ? context.read<AdvancedModeProvider>().resolveOptions(config)
+        : _buildNormalModeOptions(config);
+
+    var optimalPrice = calculator.findOptimalPrice(
+      targetNetAmount: precio,
+      settings: settings,
+      options: options,
+    );
+
+    // En modo normal, si el precio calculado supera el umbral oficial de Mercado Libre,
+    // el envío gratis es obligatorio por plataforma.
+    if (!isAdvanced &&
+        optimalPrice >= settings.freeShippingThreshold &&
+        !options.freeShipping) {
+      options = options.copyWith(freeShipping: true);
+      optimalPrice = calculator.findOptimalPrice(
+        targetNetAmount: precio,
+        settings: settings,
+        options: options,
+      );
+      envioGratis = true;
+    }
+
+    final breakdown = calculator.getBreakdown(
+      publishedPrice: optimalPrice,
       targetNetAmount: precio,
       settings: settings,
       options: options,
@@ -218,46 +243,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       precioML = optimalPrice;
-      if (!context.read<AdvancedModeProvider>().enabled &&
-          precioML >= settings.freeShippingThreshold) {
-        envioGratis = true;
-      }
+      _breakdown = breakdown;
     });
   }
 
   void _onPrecioChanged(String value) {
     final settings = _effectiveSettingsOrNull();
-    if (value.isEmpty || settings == null) {
+    if (settings == null) {
       return;
     }
 
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      _debounce?.cancel();
+      setState(() {
+        precio = 0.0;
+        precioML = 0.0;
+        _breakdown = null;
+      });
+      return;
+    }
+
+    final parsedPrice = CurrencyUtils.parse(trimmed) ?? 0.0;
     setState(() {
-      precio = double.tryParse(value) ?? 0.0;
+      precio = parsedPrice;
     });
 
     _debounce?.cancel();
-
-    _debounce = Timer(const Duration(seconds: 2), () {
-      final parsedPrice = double.tryParse(value);
-      if (parsedPrice == null) {
-        return;
-      }
-
-      if (parsedPrice < settings.minAllowedPrice) {
-        _replaceInputValue(settings.minAllowedPrice);
-        _showMessage(
-          "El precio no puede ser menor a \$${settings.minAllowedPrice.toStringAsFixed(0)}",
-        );
-      } else if (parsedPrice > settings.maxAllowedPrice) {
-        _replaceInputValue(settings.maxAllowedPrice);
-        _showMessage(
-          "El precio no puede ser mayor a \$${settings.maxAllowedPrice.toStringAsFixed(0)}",
-        );
-      }
-
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
       _checkEasterEggs(parsedPrice);
       buscarMejorPrecio();
     });
+  }
+
+  void _onPrecioSubmitted(String value) {
+    _debounce?.cancel();
+    final parsed = CurrencyUtils.parse(value.trim()) ?? 0.0;
+    setState(() {
+      precio = parsed;
+    });
+    _checkEasterEggs(parsed);
+    buscarMejorPrecio();
   }
 
   void _checkEasterEggs(double parsedPrice) {
@@ -282,14 +309,6 @@ class _MyHomePageState extends State<MyHomePage> {
         'Umbral detectado: Mercado Libre ya te pide envio gratis 🚚',
       );
     }
-  }
-
-  void _replaceInputValue(double value) {
-    final formatted = value.toStringAsFixed(1);
-    precioController
-      ..text = formatted
-      ..selection = TextSelection.collapsed(offset: formatted.length);
-    precio = value;
   }
 
   void _showMessage(String message) {
@@ -318,9 +337,11 @@ class _MyHomePageState extends State<MyHomePage> {
     await provider.markModeHintSeen();
     if (mounted) {
       setState(() {});
-      buscarMejorPrecio();
+      buscarMePrecio();
     }
   }
+
+  void buscarMePrecio() => buscarMejorPrecio();
 
   void _openAdvancedSettings() {
     final config = _configOrNull;
@@ -349,6 +370,22 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _openDonationsSheet() {
+    final config = _configOrNull;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: false,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (_) => DonacionesSheet(
+        donationsConfig: config?.donations ?? const DonationsConfig(),
+      ),
+    );
+  }
+
   Future<void> _onMenuSelected(_HomeMenuAction action) async {
     switch (action) {
       case _HomeMenuAction.normalMode:
@@ -357,6 +394,8 @@ class _MyHomePageState extends State<MyHomePage> {
         await _setMode(true);
       case _HomeMenuAction.openAdvancedSettings:
         _openAdvancedSettings();
+      case _HomeMenuAction.openDonations:
+        _openDonationsSheet();
       case _HomeMenuAction.openCredits:
         Navigator.of(
           context,
@@ -371,9 +410,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(28),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(28),
         gradient: LinearGradient(
           colors: [theme.colorScheme.primary, theme.colorScheme.secondary],
           begin: Alignment.topLeft,
@@ -381,9 +420,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.primary.withValues(alpha: 0.22),
-            blurRadius: 30,
-            offset: const Offset(0, 18),
+            color: theme.colorScheme.primary.withValues(alpha: 0.2),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
           ),
         ],
       ),
@@ -391,20 +430,29 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            advancedMode ? 'Modo avanzado' : 'Modo normal',
-            style: theme.textTheme.titleMedium?.copyWith(
+            advancedMode
+                ? 'Modo avanzado (Parámetros a medida)'
+                : 'Cálculo inverso para Mercado Libre',
+            style: theme.textTheme.titleSmall?.copyWith(
               color: Colors.white.withValues(alpha: 0.9),
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text(
-            'Calcula el precio sugerido.',
-            style: theme.textTheme.headlineMedium?.copyWith(
+            'Decí cuánto querés recibir.',
+            style: theme.textTheme.headlineSmall?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.w800,
-              height: 1.1,
-              letterSpacing: -0.8,
+              letterSpacing: -0.6,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'DoBre calcula el precio exacto de publicación contemplando comisiones, cuotas y envío oficial.',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: Colors.white.withValues(alpha: 0.85),
+              height: 1.3,
             ),
           ),
         ],
@@ -453,21 +501,21 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Configuracion activa',
+              'Configuración activa',
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 12),
-            Text('Categoria: ${category?.name ?? options.categoryId}'),
+            Text('Categoría: ${category?.name ?? options.categoryId}'),
             Text(
-              'Publicacion: ${publicationType?.name ?? options.publicationTypeId}',
+              'Publicación: ${publicationType?.name ?? options.publicationTypeId}',
             ),
             Text('Peso: ${options.weightKg.toStringAsFixed(2)} kg'),
             Text(
               'Cuotas: ${installment?.label ?? options.installmentOptionId}',
             ),
-            Text('Envio gratis: ${options.freeShipping ? 'Si' : 'No'}'),
+            Text('Envío gratis: ${options.freeShipping ? 'Sí' : 'No'}'),
             const SizedBox(height: 16),
             OutlinedButton(
               onPressed: _openAdvancedSettings,
@@ -544,7 +592,9 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              advancedMode ? 'Calculo' : 'Venta',
+              advancedMode
+                  ? 'Parámetros del cálculo'
+                  : 'Datos de la publicación',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
@@ -553,6 +603,7 @@ class _MyHomePageState extends State<MyHomePage> {
             PrecioTextField(
               controller: precioController,
               onChanged: _onPrecioChanged,
+              onSubmitted: _onPrecioSubmitted,
             ),
             const SizedBox(height: 18),
             _buildNormalControls(context, config, settings),
@@ -599,7 +650,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             const SizedBox(height: 24),
-            Resultado(precioML: precioML, onCopiar: _copiarPrecio),
+            Resultado(
+              precioML: precioML,
+              onCopiar: _copiarPrecio,
+              breakdown: _breakdown,
+            ),
           ],
         ),
       ),
@@ -711,8 +766,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text('Editar modo avanzado'),
                   ),
                   const PopupMenuItem(
+                    value: _HomeMenuAction.openDonations,
+                    child: Row(
+                      children: [
+                        Icon(Icons.volunteer_activism_rounded, size: 18),
+                        SizedBox(width: 10),
+                        Text('Apoyar a DoBre'),
+                      ],
+                    ),
+                  ),
+                  const PopupMenuItem(
                     value: _HomeMenuAction.openCredits,
-                    child: Text('Informacion'),
+                    child: Text('Información'),
                   ),
                   const PopupMenuItem(
                     value: _HomeMenuAction.openSettings,

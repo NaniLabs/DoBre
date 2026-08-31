@@ -408,5 +408,18 @@
   "input": {
     "minAllowedPrice": 1000.0,
     "maxAllowedPrice": 999999999.0
+  },
+  "donations": {
+    "enabled": true,
+    "alias": "dobre.app.mp",
+    "cvu": "",
+    "title": "Apoyar el proyecto DoBre",
+    "description": "DoBre es una herramienta gratuita e independiente. Si te resulta útil para tus publicaciones, podés apoyar su desarrollo voluntariamente mediante Mercado Pago.",
+    "links": {
+      "custom": null,
+      "preset1000": null,
+      "preset2500": null,
+      "preset5000": null
+    }
   }
 }

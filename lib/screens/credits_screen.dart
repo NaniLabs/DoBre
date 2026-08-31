@@ -8,7 +8,7 @@ class CreditsScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Informacion')),
+      appBar: AppBar(title: const Text('Información')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -26,8 +26,10 @@ class CreditsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Desarrollado por Nani.',
-                    style: theme.textTheme.titleMedium,
+                    'Versión 1.0.0 • Desarrollado por Nani',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               ),
@@ -41,14 +43,14 @@ class CreditsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Informacion importante',
+                    'Información importante',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'DoBre es un proyecto independiente y no esta afiliado, asociado ni respaldado por Mercado Libre. Usa informacion publica y las opciones definidas por el usuario para generar estimaciones. Mercado Libre(R) es una marca registrada de su respectivo titular. Verifica siempre las condiciones oficiales antes de publicar.',
+                    'DoBre es un proyecto independiente y no está afiliado, asociado ni respaldado por Mercado Libre. Usa información pública y las opciones definidas por el usuario para generar estimaciones. Mercado Libre® es una marca registrada de su respectivo titular. Verificá siempre las condiciones oficiales antes de publicar.',
                     style: theme.textTheme.bodyMedium,
                   ),
                 ],
@@ -62,9 +64,10 @@ class CreditsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
+                  _CreditLine(title: 'Versión', value: '1.0.0 (Release Estable)'),
                   _CreditLine(title: 'Base', value: 'Flutter'),
                   _CreditLine(title: 'Backend', value: 'Cloudflare Workers'),
-                  _CreditLine(title: 'Config', value: 'Configuracion remota'),
+                  _CreditLine(title: 'Config', value: 'Configuración remota'),
                 ],
               ),
             ),

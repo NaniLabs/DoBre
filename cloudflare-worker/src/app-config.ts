@@ -13,6 +13,7 @@ export interface AppConfig {
   categories: Category[];
   advancedMode: AdvancedModeConfig;
   input: InputConfig;
+  donations?: DonationsConfig;
 }
 
 export interface PublicationType {
@@ -81,3 +82,18 @@ export interface InputConfig {
   minAllowedPrice: number;
   maxAllowedPrice: number;
 }
+
+export interface DonationsConfig {
+  enabled: boolean;
+  alias: string;
+  cvu: string;
+  title: string;
+  description: string;
+  links?: {
+    custom?: string | null;
+    preset1000?: string | null;
+    preset2500?: string | null;
+    preset5000?: string | null;
+  };
+}
+

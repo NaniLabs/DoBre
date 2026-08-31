@@ -26,7 +26,7 @@ dobre_release:
   windows_asset_name: DoBreSetup-v{version}.exe
   linux_asset_name: null
   macos_asset_name: null
-  web_app_url: https://dobre-v0-3-0.igforeversal.workers.dev/
+  web_app_url: https://dobre-app.nanilabs.lat/
   changelog_url: https://github.com/NaniLabs/DoBre/releases/tag/v{version}
   maintenance_mode: false
 

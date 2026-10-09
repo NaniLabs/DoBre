@@ -131,6 +131,7 @@ export const translations = {
       text: 'DoBre es un proyecto independiente, sin afiliación, asociación ni respaldo de Mercado Libre. Usa información pública y las opciones definidas por cada usuario para generar estimaciones. Mercado Libre es una marca registrada de su respectivo titular. Antes de publicar, verificá siempre las condiciones oficiales vigentes.',
     },
     footer: 'Hecho para publicar con más claridad.',
+    footerCreditPre: 'Un proyecto de',
   },
   en: {
     metadata: {
@@ -262,6 +263,7 @@ export const translations = {
       text: 'DoBre is an independent project, with no affiliation, association, or endorsement from Mercado Libre. It uses public information and the options selected by each user to produce estimates. Mercado Libre is a registered trademark of its respective owner. Always verify the current official conditions before listing.',
     },
     footer: 'Built to help you list with more clarity.',
+    footerCreditPre: 'A project by',
   },
 } as const
 

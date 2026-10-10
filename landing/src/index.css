@@ -40,7 +40,7 @@
   --teal-soft: #103b3a;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
 
 body {
   margin: 0;
@@ -81,10 +81,9 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, #0f766e 10%, #2563eb 92%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  /* Deprecated: gradient text removed. Use solid teal accent instead. */
+  color: var(--teal);
+  font-weight: inherit;
 }
 
 .eyebrow {
@@ -162,12 +161,12 @@ body {
 .button-large { min-height: 3.6rem; padding: 0.95rem 1.3rem; }
 
 .button-primary {
-  background: linear-gradient(135deg, #0f766e, #177bba);
+  background: var(--teal);
   color: #f8fffd;
-  box-shadow: 0 13px 24px rgba(15, 118, 110, 0.2);
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.18);
 }
 
-.button-primary:hover { box-shadow: 0 17px 32px rgba(15, 118, 110, 0.28); }
+.button-primary:hover { box-shadow: 0 12px 26px rgba(15, 118, 110, 0.24); }
 .button-secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 .download-button { min-width: 13.4rem; }
 

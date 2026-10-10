@@ -53,6 +53,7 @@ export const translations = {
     },
     preview: {
       label: 'Vista previa del cálculo de DoBre',
+      demoLabel: '// DEMO VISUAL · EJEMPLO ILUSTRATIVO',
       mode: 'Modo normal',
       receive: 'Quiero recibir',
       category: 'Categoría',
@@ -185,6 +186,7 @@ export const translations = {
     },
     preview: {
       label: 'DoBre calculation preview',
+      demoLabel: '// DEMO VISUAL · ILLUSTRATIVE EXAMPLE',
       mode: 'Normal mode',
       receive: 'I want to receive',
       category: 'Category',

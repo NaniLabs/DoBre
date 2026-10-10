@@ -11,7 +11,7 @@ export function HeroPreview() {
           <span className="rounded-full bg-teal-soft px-2.5 py-1 text-[0.66rem] font-bold text-teal">{copy.preview.mode}</span>
         </div>
         <div className="rounded-[1.45rem] border border-line bg-surface p-5">
-          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-muted">// DEMO VISUAL · EJEMPLO ILUSTRATIVO</p>
+          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-muted">{copy.preview.demoLabel}</p>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">{copy.preview.receive}</p>
           <p className="mt-2 text-3xl font-extrabold tracking-[-0.06em] text-ink">$ 50.000</p>
           <div className="my-5 h-px bg-line" />

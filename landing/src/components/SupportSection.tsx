@@ -46,7 +46,7 @@ export function SupportSection() {
           eyebrow={copy.donations.eyebrow}
           title={
             <>
-              {copy.donations.titleStart} <span className="text-gradient">{copy.donations.titleAccent}</span>
+              {copy.donations.titleStart} <span className="text-teal">{copy.donations.titleAccent}</span>
             </>
           }
           description={copy.donations.description}

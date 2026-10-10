@@ -1,5 +1,5 @@
-import { HeroPreview } from './HeroPreview'
 import { DownloadActions } from './DownloadActions'
+import { InverseCalculator } from './InverseCalculator'
 import { releaseConfig } from '../lib/site-config'
 import { useLanguage } from '../i18n/LanguageProvider'
 
@@ -27,7 +27,7 @@ export function Hero() {
           </div>
         </div>
         <div className="animate-enter-delayed lg:justify-self-end">
-          <HeroPreview />
+          <InverseCalculator />
         </div>
       </div>
     </section>

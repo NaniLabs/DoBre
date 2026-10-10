@@ -40,11 +40,16 @@
   --teal-soft: #103b3a;
 }
 
-html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+html { scroll-behavior: smooth; scroll-snap-type: y mandatory; scroll-padding-top: 5rem; }
 
 main > * {
   scroll-snap-align: start;
   scroll-margin-top: 5rem;
+}
+
+/* Ensure sections snap cleanly without overlap */
+main > section {
+  scroll-snap-stop: normal;
 }
 
 body {

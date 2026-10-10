@@ -12,7 +12,7 @@ export function WebExperience() {
           <div className="max-w-2xl">
             <p className="eyebrow"><span className="size-1.5 rounded-full bg-teal" /> {copy.webExperience.eyebrow}</p>
             <h2 id="web-experience-title" className="mt-6 text-balance text-4xl font-extrabold tracking-[-0.06em] text-ink sm:text-5xl">
-              {copy.webExperience.titleStart} <span className="text-gradient">{copy.webExperience.titleAccent}</span>
+              {copy.webExperience.titleStart} <span className="text-teal">{copy.webExperience.titleAccent}</span>
             </h2>
             <p className="mt-5 max-w-xl text-pretty text-lg leading-8 text-muted">{copy.webExperience.description}</p>
           </div>

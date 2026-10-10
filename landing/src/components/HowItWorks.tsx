@@ -10,7 +10,7 @@ export function HowItWorks() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow={copy.how.eyebrow}
-          title={<>{copy.how.titleStart} <span className="text-gradient">{copy.how.titleAccent}</span></>}
+          title={<>{copy.how.titleStart} <span className="text-teal">{copy.how.titleAccent}</span></>}
           description={copy.how.description}
           headingId="how-it-works-title"
         />

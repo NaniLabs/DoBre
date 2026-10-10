@@ -9,12 +9,11 @@ export function Hero() {
   return (
     <section id="inicio" className="relative overflow-hidden" aria-labelledby="hero-title">
       <div className="hero-grid pointer-events-none absolute inset-x-0 top-0 h-[44rem] -z-20" />
-      <div className="pointer-events-none absolute left-1/2 top-20 -z-10 h-96 w-[36rem] -translate-x-1/2 rounded-full bg-teal/10 blur-[110px]" />
       <div className="mx-auto grid min-h-[calc(100vh-84px)] w-full max-w-7xl items-center gap-14 px-5 pb-20 pt-10 sm:px-8 sm:pt-16 lg:grid-cols-[1.08fr_.92fr] lg:gap-10 lg:px-10 lg:pb-24">
         <div className="animate-enter max-w-2xl">
           <p className="eyebrow"><span className="size-1.5 rounded-full bg-teal" /> {copy.hero.eyebrow}</p>
-          <h1 id="hero-title" className="mt-7 text-balance text-[clamp(3rem,7vw,5.8rem)] font-extrabold leading-[0.94] tracking-[-0.075em] text-ink">
-            {copy.hero.titleStart} <span className="text-gradient">{copy.hero.titleAccent}</span>
+          <h1 id="hero-title" className="mt-7 text-balance text-[clamp(2.6rem,5.5vw,4.4rem)] font-extrabold leading-[0.96] tracking-[-0.06em] text-ink">
+            {copy.hero.titleStart} <span className="text-teal">{copy.hero.titleAccent}</span>
           </h1>
           <p className="mt-7 max-w-xl text-pretty text-lg leading-8 text-muted sm:text-xl">
             {copy.hero.description}

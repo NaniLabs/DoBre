@@ -7,7 +7,6 @@ export function HowItWorks() {
 
   return (
     <section id="como-funciona" className="relative overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-10" aria-labelledby="how-it-works-title">
-      <div className="absolute right-0 top-1/3 -z-10 size-96 rounded-full bg-teal/8 blur-[100px]" />
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow={copy.how.eyebrow}
@@ -47,7 +46,7 @@ function OptionPill({ label, value }: { label: string; value: string }) {
 
 function ResultVisual() {
   const { copy } = useLanguage()
-  return <div className="flex h-36 flex-col justify-between overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#0f766e,#2563eb)] p-5 text-white shadow-[0_12px_30px_rgba(15,118,110,0.2)]"><p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-white/70">{copy.preview.suggestedPrice}</p><div className="flex items-end justify-between gap-2"><p className="text-3xl font-extrabold tracking-[-0.06em]">$ 63.619</p><span className="grid size-7 place-items-center rounded-full bg-white/15"><CheckIcon /></span></div></div>
+  return <div className="flex h-36 flex-col justify-between overflow-hidden rounded-2xl bg-teal p-5 text-white shadow-[0_8px_20px_rgba(15,118,110,0.18)]"><p className="font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-white/70">{copy.preview.suggestedPrice}</p><div className="flex items-end justify-between gap-2"><p className="text-3xl font-extrabold tracking-[-0.06em]">$ 63.619</p><span className="grid size-7 place-items-center rounded-full bg-white/15"><CheckIcon /></span></div></div>
 }
 
 function CheckIcon() {

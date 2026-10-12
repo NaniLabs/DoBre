@@ -4,10 +4,10 @@ type BrandMarkProps = {
 
 export function BrandMark({ compact = false }: BrandMarkProps) {
   return (
-    <div className="flex items-center gap-2.5" aria-label="DoBre">
-      <img className="size-9" src="/branding/logo.svg" width="36" height="36" alt="" />
+    <div className="flex items-center gap-2" aria-label="DoBre">
+      <img className="size-7" src="/branding/logo.svg" width="28" height="28" alt="" />
       {!compact && (
-        <span className="text-lg font-extrabold tracking-[-0.05em] text-ink">
+        <span className="text-base font-bold tracking-tight text-ink">
           DoBre
         </span>
       )}

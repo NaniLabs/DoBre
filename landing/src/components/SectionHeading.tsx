@@ -17,11 +17,11 @@ export function SectionHeading({
 
   return (
     <div className={`flex max-w-2xl flex-col ${alignment}`}>
-      <p className="eyebrow"><span className="size-1.5 rounded-full bg-teal" /> {eyebrow}</p>
-      <h2 id={headingId} className="mt-6 text-balance text-4xl font-extrabold leading-[1.02] tracking-[-0.06em] text-ink sm:text-5xl">
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 id={headingId} className="mt-2.5 text-balance text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl lg:text-3xl">
         {title}
       </h2>
-      <p className="mt-5 max-w-xl text-pretty text-base leading-7 text-muted sm:text-lg">
+      <p className="mt-3 max-w-xl text-pretty text-sm leading-relaxed text-muted sm:text-base">
         {description}
       </p>
     </div>

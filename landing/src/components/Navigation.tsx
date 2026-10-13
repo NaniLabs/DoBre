@@ -47,7 +47,6 @@ export function Navigation() {
 
         <nav className="hidden items-center gap-6 md:flex" aria-label={copy.nav.mainLabel}>
           <a className="nav-link" href={siteConfig.links.howItWorks}>{copy.nav.howItWorks}</a>
-          <a className="nav-link" href={siteConfig.links.webExperience}>{copy.nav.webApp}</a>
           {hasDownloads && <a className="nav-link" href={siteConfig.links.downloads}>{copy.nav.downloads}</a>}
           {releaseConfig.donations?.enabled && <a className="nav-link" href={siteConfig.links.support}>{copy.nav.support}</a>}
           <LanguageSelector />
@@ -72,7 +71,6 @@ export function Navigation() {
         {isMenuOpen && (
           <nav id="mobile-navigation" className="absolute inset-x-5 top-[64px] grid gap-1 rounded-xl border border-line bg-surface p-3 shadow-panel md:hidden" aria-label={copy.nav.mobileLabel}>
             <a className="mobile-link" href={siteConfig.links.howItWorks} onClick={closeMenu}>{copy.nav.howItWorks}</a>
-            <a className="mobile-link" href={siteConfig.links.webExperience} onClick={closeMenu}>{copy.nav.webApp}</a>
             {hasDownloads && <a className="mobile-link" href={siteConfig.links.downloads} onClick={closeMenu}>{copy.nav.downloads}</a>}
             {releaseConfig.donations?.enabled && <a className="mobile-link" href={siteConfig.links.support} onClick={closeMenu}>{copy.nav.support}</a>}
             <div className="mt-2 px-1"><LanguageSelector /></div>

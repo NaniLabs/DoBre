@@ -1,12 +1,9 @@
 import { Hero } from './components/Hero'
 import { HowItWorks } from './components/HowItWorks'
 import { Navigation } from './components/Navigation'
-import { WebExperience } from './components/WebExperience'
-import { Faq } from './components/Faq'
 import { Footer } from './components/Footer'
 import { IndependenceNotice } from './components/IndependenceNotice'
 import { SupportSection } from './components/SupportSection'
-import { TrustStrip } from './components/TrustStrip'
 
 function App() {
   return (
@@ -14,10 +11,7 @@ function App() {
       <Navigation />
       <main id="main-content" tabIndex={-1}>
         <Hero />
-        <TrustStrip />
         <HowItWorks />
-        <WebExperience />
-        <Faq />
         <SupportSection />
         <IndependenceNotice />
       </main>

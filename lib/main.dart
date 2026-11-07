@@ -427,8 +427,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             child: Text(
               advancedMode
-                  ? 'Modo avanzado (Par?metros a medida)'
-                  : 'C?lculo inverso para Mercado Libre',
+                  ? 'Modo avanzado (Parámetros a medida)'
+                  : 'Cálculo inverso para Mercado Libre',
               style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.primary,
                 fontWeight: FontWeight.w700,

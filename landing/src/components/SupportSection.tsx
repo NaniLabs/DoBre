@@ -1,4 +1,4 @@
-import { useLanguage } from '../i18n/LanguageProvider'
+﻿import { useLanguage } from '../i18n/LanguageProvider'
 import { releaseConfig } from '../lib/site-config'
 import { SectionHeading } from './SectionHeading'
 
@@ -71,7 +71,7 @@ export function SupportSection() {
         </div>
 
         <p className="mt-5 text-xs text-muted">
-          {copy.donations.secureNote}
+          {copy.donations.secureNote} · <a href="https://cafecito.app/dobre" target="_blank" rel="noreferrer" className="font-semibold text-teal">Cafecito</a> · Mercado Pago: <strong>dobre.mp</strong>
         </p>
       </div>
     </section>

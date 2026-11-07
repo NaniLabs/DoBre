@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -19,6 +19,7 @@
 
 :root {
   color-scheme: light;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --canvas: #f7f6f2;
   --surface: #ffffff;
   --surface-raised: #efede6;
@@ -284,4 +285,28 @@
 .money-input {
   font-size: 1.125rem;
   letter-spacing: -0.02em;
+  padding-left: 2.15rem;
+}
+
+
+/* Workbench controls and proportional ledger */
+.preset-row { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .65rem; }
+.preset-chip, .copy-price { border: 1px solid var(--line); border-radius: .5rem; padding: .4rem .6rem; background: var(--surface); color: var(--ink); font-size: .7rem; font-weight: 700; cursor: pointer; }
+.preset-chip[aria-pressed="true"] { border-color: var(--teal); background: var(--teal-soft); color: var(--teal); }
+.copy-price { color: var(--teal); border-color: var(--teal); }
+.comparison-strip { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; margin-top: 1rem; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: .6rem; background: var(--surface); font-size: .7rem; color: var(--muted); }
+.comparison-strip strong { color: var(--ink); white-space: nowrap; }
+.comparison-difference { margin-left: auto; color: var(--teal); font-weight: 700; white-space: nowrap; }
+.distribution-bar { display: flex; height: .65rem; overflow: hidden; border-radius: 999px; background: var(--line); }
+.distribution-segment { height: 100%; transition: width 260ms var(--ease-out); }
+.distribution-legend { display: flex; flex-wrap: wrap; gap: .4rem .85rem; margin-top: .65rem; color: var(--muted); font-size: .68rem; }
+.distribution-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+.distribution-legend i { width: .5rem; height: .5rem; border-radius: 50%; flex: none; }
+.distribution-legend strong { color: var(--ink); }
+button, a.button, .mobile-link, .install-tutorial summary, #apoyo a { transition: transform 150ms var(--ease-out), background-color 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out), opacity 150ms var(--ease-out); }
+button:active, a.button:active, .mobile-link:active, .install-tutorial summary:active, #apoyo a:active { transform: scale(.97); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  button:active, a.button:active, .mobile-link:active, .install-tutorial summary:active, #apoyo a:active { transform: none; }
 }

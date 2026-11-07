@@ -30,6 +30,7 @@ export function DownloadActions() {
         )}
       </div>
       {hasAndroid && <InstallTutorial />}
+      {hasWindows && <p className="mt-2 text-xs text-muted">{copy.downloads.windowsNote}</p>}
     </div>
   )
 }

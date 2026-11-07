@@ -10,9 +10,7 @@ function getInitialTheme(): Theme {
   const savedTheme = window.localStorage.getItem('dobre-theme')
   if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
+  return 'light'
 }
 
 export function ThemeToggle() {

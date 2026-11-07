@@ -91,56 +91,78 @@ export function InverseCalculator() {
     freeShipping: false,
   })
 
-  const calculation = useMemo(() => {
-    const commissionRate = CATEGORY_FEES[state.category][state.publicationType]
-    const installmentRate =
-      state.publicationType === 'premium' ? INSTALLMENT_RATES[state.installments] : 0
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
 
-    if (state.netAmount <= 0) {
+  const calculations = useMemo(() => {
+    const calculate = (publicationType: PublicationType) => {
+      const commissionRate = CATEGORY_FEES[state.category][publicationType]
+      const installmentRate =
+        publicationType === 'premium' ? INSTALLMENT_RATES[state.installments] : 0
+
+      if (state.netAmount <= 0) {
+        return {
+          suggestedPrice: 0,
+          commission: 0,
+          commissionPct: Math.round(commissionRate * 1000) / 10,
+          installmentFee: 0,
+          installmentPct: Math.round(installmentRate * 1000) / 10,
+          fixedCharge: 0,
+          shippingCost: 0,
+          error: false,
+        }
+      }
+
+      // Binary search matching lib/services/pricing_calculator.dart
+      let min = 0
+      let max = state.netAmount * 2 + 50000
+      for (let i = 0; i < 65; i++) {
+        const mid = (min + max) / 2
+        const net = calculateReceived(mid, commissionRate, installmentRate, state.freeShipping)
+        if (net < state.netAmount) {
+          min = mid
+        } else {
+          max = mid
+        }
+      }
+
+      const suggestedPrice = Math.round(max)
+      const commission = Math.round(suggestedPrice * commissionRate)
+      const installmentFee = Math.round(suggestedPrice * installmentRate)
+      const fixedCharge = getFixedCharge(suggestedPrice)
+      const shippingCost = getShippingCost(suggestedPrice, state.freeShipping)
+
       return {
-        suggestedPrice: 0,
-        commission: 0,
-         commissionPct: Math.round(commissionRate * 1000) / 10,
-        installmentFee: 0,
+        suggestedPrice,
+        commission,
+        commissionPct: Math.round(commissionRate * 1000) / 10,
+        installmentFee,
         installmentPct: Math.round(installmentRate * 1000) / 10,
-        fixedCharge: 0,
-        shippingCost: 0,
+        fixedCharge,
+        shippingCost,
         error: false,
       }
     }
-
-    // Binary search matching lib/services/pricing_calculator.dart
-    let min = 0
-    let max = state.netAmount * 2 + 50000
-    for (let i = 0; i < 65; i++) {
-      const mid = (min + max) / 2
-      const net = calculateReceived(mid, commissionRate, installmentRate, state.freeShipping)
-      if (net < state.netAmount) {
-        min = mid
-      } else {
-        max = mid
-      }
-    }
-
-    const suggestedPrice = Math.round(max)
-    const commission = Math.round(suggestedPrice * commissionRate)
-    const installmentFee = Math.round(suggestedPrice * installmentRate)
-    const fixedCharge = getFixedCharge(suggestedPrice)
-    const shippingCost = getShippingCost(suggestedPrice, state.freeShipping)
-
-    return {
-      suggestedPrice,
-      commission,
-      commissionPct: Math.round(commissionRate * 1000) / 10,
-      installmentFee,
-      installmentPct: Math.round(installmentRate * 1000) / 10,
-      fixedCharge,
-      shippingCost,
-      error: false,
-    }
+    return { classic: calculate('classic'), premium: calculate('premium') }
   }, [state])
+  const calculation = calculations[state.publicationType]
+  const segments = [
+    { label: language === 'es' ? 'Neto en mano' : 'Net payout', amount: Math.max(0, calculation.suggestedPrice - calculation.commission - calculation.installmentFee - calculation.fixedCharge - calculation.shippingCost), color: '#0D9488' },
+    { label: language === 'es' ? 'Comisión ML' : 'ML commission', amount: calculation.commission, color: '#D97706' },
+    { label: language === 'es' ? 'Financiación cuotas' : 'Installment financing', amount: calculation.installmentFee, color: '#E11D48' },
+    { label: language === 'es' ? 'Envío / cargo fijo' : 'Shipping / fixed fee', amount: calculation.fixedCharge + calculation.shippingCost, color: '#64748B' },
+  ].filter((segment) => segment.amount > 0)
+
+  const copyPrice = async () => {
+    try {
+      await navigator.clipboard.writeText(String(calculation.suggestedPrice))
+      setCopyStatus('copied')
+    } catch {
+      setCopyStatus('error')
+    }
+  }
 
   const update = <K extends keyof CalculatorState>(key: K, value: CalculatorState[K]) => {
+    setCopyStatus('idle')
     setState((prev) => {
       const next = { ...prev, [key]: value }
       if (key === 'publicationType' && value === 'classic') {
@@ -154,6 +176,7 @@ export function InverseCalculator() {
   }
 
   const reset = () => {
+    setCopyStatus('idle')
     setState({
       netAmount: 50000,
       category: 'electronics',
@@ -217,6 +240,13 @@ export function InverseCalculator() {
               />
             </div>
           </label>
+          <div className="preset-row" aria-label={language === 'es' ? 'Montos sugeridos' : 'Suggested amounts'}>
+            {[15000, 30000, 50000, 120000, 250000].map((amount) => (
+              <button key={amount} type="button" className="preset-chip" aria-pressed={state.netAmount === amount} onClick={() => update('netAmount', amount)}>
+                $ {formatCurrency(amount, language)}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Options Grid */}
@@ -320,18 +350,30 @@ export function InverseCalculator() {
                 {copy.calculator.suggestedPrice}
               </p>
               <span className="font-mono text-xs text-muted">
-                {copy.calculator.netVerified}: $ {formatCurrency(state.netAmount, language)}
+                {copy.calculator.netAmount}: $ {formatCurrency(state.netAmount, language)}
               </span>
             </div>
-            <p className="mt-1.5 text-2xl sm:text-3xl font-bold tracking-tight text-ink">
-              $ {formatCurrency(calculation.suggestedPrice, language)}
-            </p>
+            <div className="mt-1.5 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-2xl sm:text-3xl font-bold tracking-tight text-ink">$ {formatCurrency(calculation.suggestedPrice, language)}</p>
+              <button type="button" className="copy-price" onClick={copyPrice}>
+                {copyStatus === 'copied' ? (language === 'es' ? '✓ Copiado' : '✓ Copied') : (language === 'es' ? 'Copiar precio' : 'Copy price')}
+              </button>
+            </div>
+            <span className="sr-only" role="status">{copyStatus === 'error' ? (language === 'es' ? 'No se pudo copiar el precio.' : 'Could not copy the price.') : copyStatus === 'copied' ? (language === 'es' ? 'Precio copiado.' : 'Price copied.') : ''}</span>
+            <div className="comparison-strip">
+              <span>{copy.calculator.publicationOptions[0]} <strong>$ {formatCurrency(calculations.classic.suggestedPrice, language)}</strong></span>
+              <span>{copy.calculator.publicationOptions[1]} <strong>$ {formatCurrency(calculations.premium.suggestedPrice, language)}</strong></span>
+              <span className="comparison-difference">+ $ {formatCurrency(calculations.premium.suggestedPrice - calculations.classic.suggestedPrice, language)}</span>
+            </div>
+            <p className="mt-2 text-xs text-muted">{language === 'es' ? 'Diferencia para el comprador con el mismo neto objetivo.' : 'Buyer difference for the same target net payout.'}</p>
 
-            <div className="mt-4" aria-label={`${copy.calculator.netVerified}: ${Math.min(100, Math.max(0, state.netAmount / calculation.suggestedPrice * 100)).toFixed(1)}%`}>
-              <div className="h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
-                <div className="h-full bg-teal" style={{ width: `${Math.min(100, Math.max(0, state.netAmount / calculation.suggestedPrice * 100))}%` }} />
+            <div className="mt-4">
+              <div className="distribution-bar" aria-hidden="true">
+                {segments.map((segment) => <div key={segment.label} className="distribution-segment" style={{ width: `${segment.amount / calculation.suggestedPrice * 100}%`, backgroundColor: segment.color }} />)}
               </div>
-              <p className="mt-1 font-mono text-xs text-muted">{copy.calculator.netVerified} / {copy.calculator.suggestedPrice}: {(state.netAmount / calculation.suggestedPrice * 100).toFixed(1)}%</p>
+              <div className="distribution-legend">
+                {segments.map((segment) => <span key={segment.label}><i style={{ backgroundColor: segment.color }} />{segment.label} <strong>{new Intl.NumberFormat(language === 'es' ? 'es-AR' : 'en-US', { maximumFractionDigits: 1 }).format(segment.amount / calculation.suggestedPrice * 100)}%</strong></span>)}
+              </div>
             </div>
 
             {/* Breakdown */}

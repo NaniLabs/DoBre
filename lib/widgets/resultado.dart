@@ -2,7 +2,6 @@ import 'package:dobre/models/calculation_breakdown.dart';
 import 'package:dobre/utils/currency_utils.dart';
 import 'package:flutter/material.dart';
 
-
 class Resultado extends StatefulWidget {
   const Resultado({
     super.key,
@@ -98,14 +97,24 @@ class _ResultadoState extends State<Resultado> {
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
-            formattedPrice,
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: theme.colorScheme.primary,
-              letterSpacing: -0.8,
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: widget.precioML, end: widget.precioML),
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            builder: (context, animatedValue, _) {
+              final textPrice = (animatedValue - widget.precioML).abs() < 0.01
+                  ? formattedPrice
+                  : CurrencyUtils.format(animatedValue, includeDecimals: true);
+              return Text(
+                textPrice,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: theme.colorScheme.primary,
+                  letterSpacing: -0.8,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              );
+            },
           ),
         ),
         const SizedBox(height: 18),
@@ -146,15 +155,27 @@ class _ResultadoState extends State<Resultado> {
               color: colorScheme.onSurface,
             ),
           ),
+          const SizedBox(height: 10),
+          _ProportionalBreakdownBar(
+            total: widget.precioML,
+            net: breakdown.actualReceived,
+            commission: breakdown.commissionAmount,
+            installment: breakdown.installmentAmount,
+            otherCosts: breakdown.shippingAmount +
+                breakdown.fixedChargeAmount +
+                breakdown.unitCostAmount,
+          ),
           const SizedBox(height: 12),
           _BreakdownRow(
-            label: "Comisión publicación (${breakdown.commissionPercentage.toStringAsFixed(1)}%)",
+            label:
+                "Comisión publicación (${breakdown.commissionPercentage.toStringAsFixed(1)}%)",
             value: "-${CurrencyUtils.format(breakdown.commissionAmount)}",
             isNegative: true,
           ),
           if (breakdown.hasInstallmentCost)
             _BreakdownRow(
-              label: "Costo financiación (${breakdown.installmentPercentage.toStringAsFixed(1)}%)",
+              label:
+                  "Costo financiación (${breakdown.installmentPercentage.toStringAsFixed(1)}%)",
               value: "-${CurrencyUtils.format(breakdown.installmentAmount)}",
               isNegative: true,
             ),
@@ -211,6 +232,62 @@ class _ResultadoState extends State<Resultado> {
   }
 }
 
+class _ProportionalBreakdownBar extends StatelessWidget {
+  const _ProportionalBreakdownBar({
+    required this.total,
+    required this.net,
+    required this.commission,
+    required this.installment,
+    required this.otherCosts,
+  });
+
+  final double total;
+  final double net;
+  final double commission;
+  final double installment;
+  final double otherCosts;
+
+  @override
+  Widget build(BuildContext context) {
+    if (total <= 0) return const SizedBox.shrink();
+    final colorScheme = Theme.of(context).colorScheme;
+    final netFlex = ((net / total) * 1000).round().clamp(1, 1000);
+    final commFlex = ((commission / total) * 1000).round().clamp(0, 1000);
+    final instFlex = ((installment / total) * 1000).round().clamp(0, 1000);
+    final otherFlex = ((otherCosts / total) * 1000).round().clamp(0, 1000);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(999),
+      child: SizedBox(
+        height: 8,
+        child: Row(
+          children: [
+            Flexible(
+              flex: netFlex,
+              child: Container(color: colorScheme.primary),
+            ),
+            if (commFlex > 0)
+              Flexible(
+                flex: commFlex,
+                child: Container(color: const Color(0xFFD97706)),
+              ),
+            if (instFlex > 0)
+              Flexible(
+                flex: instFlex,
+                child: Container(color: const Color(0xFFE11D48)),
+              ),
+            if (otherFlex > 0)
+              Flexible(
+                flex: otherFlex,
+                child: Container(color: colorScheme.outline),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _BreakdownRow extends StatelessWidget {
   const _BreakdownRow({
     required this.label,
@@ -256,5 +333,3 @@ class _BreakdownRow extends StatelessWidget {
     );
   }
 }
-
-

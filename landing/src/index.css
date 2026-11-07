@@ -19,28 +19,28 @@
 
 :root {
   color-scheme: light;
-  --canvas: #f6f8fb;
+  --canvas: #f7f6f2;
   --surface: #ffffff;
-  --surface-raised: #f1f5f9;
+  --surface-raised: #efede6;
   --ink: #0f172a;
   --muted: #475569;
-  --line: #dbe3ee;
-  --teal: #0f766e;
+  --line: #d8d5cb;
+  --teal: #0d9488;
   --on-teal: #ffffff;
-  --teal-soft: #e2f5f1;
+  --teal-soft: #e6f4f1;
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --canvas: #090d16;
-  --surface: #111827;
-  --surface-raised: #182234;
+  --canvas: #090d14;
+  --surface: #0f1622;
+  --surface-raised: #162032;
   --ink: #f1f5f9;
   --muted: #94a3b8;
-  --line: #243247;
-  --teal: #2dd4bf;
+  --line: #223046;
+  --teal: #14b8a6;
   --on-teal: #042f2e;
-  --teal-soft: #112e2e;
+  --teal-soft: #0f292a;
 }
 
 @layer base {

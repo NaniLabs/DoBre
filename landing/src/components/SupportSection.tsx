@@ -41,14 +41,14 @@ export function SupportSection() {
           headingId="support-title"
         />
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid border-y border-line divide-y divide-line sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-4">
           {items.map((item) => (
             <a
               key={item.title}
               href={item.href}
               target="_blank"
               rel="noreferrer"
-              className="group flex flex-col justify-between rounded-xl border border-line bg-surface p-5 transition hover:border-teal/50"
+              className="group flex flex-col justify-between p-5 transition-colors hover:bg-surface-raised"
             >
               <div>
                 <div className="flex items-center justify-between gap-2">

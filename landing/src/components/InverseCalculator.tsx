@@ -184,10 +184,10 @@ export function InverseCalculator() {
       role="region"
       aria-label={copy.calculator.ariaLabel}
     >
-      <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-card">
+      <div className="rounded-lg border border-line bg-surface p-5 sm:p-6 tabular-nums">
         <div className="mb-4 flex items-center justify-between border-b border-line pb-3">
           <p className="font-mono text-xs font-medium uppercase tracking-wider text-muted">
-            {copy.calculator.label}
+            {language === 'es' ? 'CALC-INV // MOTOR BINARIO DE PRECIOS' : 'CALC-INV // BINARY PRICING ENGINE'}
           </p>
           <button
             type="button"
@@ -327,9 +327,16 @@ export function InverseCalculator() {
               $ {formatCurrency(calculation.suggestedPrice, language)}
             </p>
 
+            <div className="mt-4" aria-label={`${copy.calculator.netVerified}: ${Math.min(100, Math.max(0, state.netAmount / calculation.suggestedPrice * 100)).toFixed(1)}%`}>
+              <div className="h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+                <div className="h-full bg-teal" style={{ width: `${Math.min(100, Math.max(0, state.netAmount / calculation.suggestedPrice * 100))}%` }} />
+              </div>
+              <p className="mt-1 font-mono text-xs text-muted">{copy.calculator.netVerified} / {copy.calculator.suggestedPrice}: {(state.netAmount / calculation.suggestedPrice * 100).toFixed(1)}%</p>
+            </div>
+
             {/* Breakdown */}
-            <div className="mt-4 space-y-1.5 border-t border-line pt-3 text-xs">
-              <div className="flex justify-between text-muted">
+            <div className="mt-4 divide-y divide-line border-y border-line text-xs">
+              <div className="flex justify-between gap-3 py-2 text-muted">
                 <span>
                   {copy.calculator.commission} ({calculation.commissionPct}%)
                 </span>
@@ -338,7 +345,7 @@ export function InverseCalculator() {
                 </span>
               </div>
               {calculation.installmentFee > 0 && (
-                <div className="flex justify-between text-muted">
+                <div className="flex justify-between gap-3 py-2 text-muted">
                   <span>
                     {copy.calculator.installmentFee} ({calculation.installmentPct}%)
                   </span>
@@ -348,7 +355,7 @@ export function InverseCalculator() {
                 </div>
               )}
               {calculation.fixedCharge > 0 && (
-                <div className="flex justify-between text-muted">
+                <div className="flex justify-between gap-3 py-2 text-muted">
                   <span>{copy.calculator.fixedCharge}</span>
                   <span className="font-mono font-semibold text-ink">
                     - $ {formatCurrency(calculation.fixedCharge, language)}
@@ -356,7 +363,7 @@ export function InverseCalculator() {
                 </div>
               )}
               {calculation.shippingCost > 0 && (
-                <div className="flex justify-between text-muted">
+                <div className="flex justify-between gap-3 py-2 text-muted">
                   <span>{copy.calculator.shippingCost}</span>
                   <span className="font-mono font-semibold text-ink">
                     - $ {formatCurrency(calculation.shippingCost, language)}

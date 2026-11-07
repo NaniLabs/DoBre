@@ -1,6 +1,7 @@
 import 'package:dobre/models/calculation_breakdown.dart';
 import 'package:dobre/utils/currency_utils.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui' show FontFeature;
 
 class Resultado extends StatefulWidget {
   const Resultado({
@@ -53,7 +54,7 @@ class _ResultadoState extends State<Resultado> {
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(color: colorScheme.outlineVariant),
             ),
             child: Row(
@@ -103,6 +104,7 @@ class _ResultadoState extends State<Resultado> {
               fontWeight: FontWeight.w800,
               color: theme.colorScheme.primary,
               letterSpacing: -0.8,
+              fontFeatures: const [FontFeature.tabularFigures()],
             ),
           ),
         ),
@@ -179,7 +181,8 @@ class _ResultadoState extends State<Resultado> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               color: colorScheme.primary.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: colorScheme.outlineVariant),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,6 +198,7 @@ class _ResultadoState extends State<Resultado> {
                   CurrencyUtils.format(breakdown.actualReceived),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w800,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                     color: colorScheme.primary,
                   ),
                 ),
@@ -223,8 +227,11 @@ class _BreakdownRow extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: colorScheme.outlineVariant)),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -240,6 +247,7 @@ class _BreakdownRow extends StatelessWidget {
             value,
             style: theme.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.w600,
+              fontFeatures: const [FontFeature.tabularFigures()],
               color: isNegative ? colorScheme.error : colorScheme.onSurface,
             ),
           ),

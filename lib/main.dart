@@ -412,37 +412,34 @@ class _MyHomePageState extends State<MyHomePage> {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
-        gradient: LinearGradient(
-          colors: [theme.colorScheme.primary, theme.colorScheme.secondary],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.primary.withValues(alpha: 0.2),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(14),
+        color: theme.cardTheme.color,
+        border: Border.all(color: theme.colorScheme.outlineVariant),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            advancedMode
-                ? 'Modo avanzado (Parámetros a medida)'
-                : 'Cálculo inverso para Mercado Libre',
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: Colors.white.withValues(alpha: 0.9),
-              fontWeight: FontWeight.w700,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              advancedMode
+                  ? 'Modo avanzado (Par?metros a medida)'
+                  : 'C?lculo inverso para Mercado Libre',
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Decí cuánto querés recibir.',
             style: theme.textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
+              color: theme.colorScheme.onSurface,
               fontWeight: FontWeight.w800,
               letterSpacing: -0.6,
             ),
@@ -451,7 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Text(
             'DoBre calcula el precio exacto de publicación contemplando comisiones, cuotas y envío oficial.',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.white.withValues(alpha: 0.85),
+              color: theme.colorScheme.onSurfaceVariant,
               height: 1.3,
             ),
           ),

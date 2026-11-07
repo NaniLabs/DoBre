@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const _lightScheme = ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xFF0F766E),
+    primary: Color(0xFF047857),
     onPrimary: Color(0xFFF7FFFD),
     secondary: Color(0xFF2563EB),
     onSecondary: Color(0xFFF8FAFF),
     error: Color(0xFFB42318),
     onError: Colors.white,
-    surface: Color(0xFFF7F6F2),
-    onSurface: Color(0xFF0F172A),
+    surface: Color(0xFFF4F6F4),
+    onSurface: Color(0xFF111827),
     surfaceContainerHighest: Color(0xFFEFEDE6),
     onSurfaceVariant: Color(0xFF475569),
     outline: Color(0xFFD8D5CB),
@@ -20,7 +20,7 @@ class AppTheme {
     inverseSurface: Color(0xFF111827),
     onInverseSurface: Color(0xFFF8FAFC),
     inversePrimary: Color(0xFF5EEAD4),
-    surfaceTint: Color(0xFF0F766E),
+    surfaceTint: Color(0xFF047857),
   );
 
   static const _darkScheme = ColorScheme(
@@ -31,7 +31,7 @@ class AppTheme {
     onSecondary: Color(0xFF0A2342),
     error: Color(0xFFFDA29B),
     onError: Color(0xFF55160C),
-    surface: Color(0xFF090D14),
+    surface: Color(0xFF0A0D11),
     onSurface: Color(0xFFF1F5F9),
     surfaceContainerHighest: Color(0xFF162032),
     onSurfaceVariant: Color(0xFF94A3B8),
@@ -41,7 +41,7 @@ class AppTheme {
     scrim: Color(0x73000000),
     inverseSurface: Color(0xFFF1F5F9),
     onInverseSurface: Color(0xFF111827),
-    inversePrimary: Color(0xFF0F766E),
+    inversePrimary: Color(0xFF047857),
     surfaceTint: Color(0xFF5EEAD4),
   );
 
@@ -72,7 +72,7 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         elevation: 0,
-        color: isDark ? const Color(0xFF0F1622) : Colors.white,
+        color: isDark ? const Color(0xFF14191F) : Colors.white,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
@@ -82,7 +82,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark ? const Color(0xFF0F1622) : Colors.white,
+        fillColor: isDark ? const Color(0xFF14191F) : Colors.white,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
@@ -122,7 +122,7 @@ class AppTheme {
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: isDark ? const Color(0xFF0F1622) : Colors.white,
+          fillColor: isDark ? const Color(0xFF14191F) : Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(color: colorScheme.outline),

@@ -724,6 +724,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: [
+          IconButton(
+            tooltip: context.watch<ThemeProvider>().modoOscuro
+                ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro',
+            isSelected: context.watch<ThemeProvider>().modoOscuro,
+            onPressed: () {
+              final theme = context.read<ThemeProvider>();
+              theme.cambiarTema(!theme.modoOscuro);
+            },
+            icon: const Icon(Icons.dark_mode_outlined),
+            selectedIcon: const Icon(Icons.light_mode_outlined),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: TweenAnimationBuilder<double>(

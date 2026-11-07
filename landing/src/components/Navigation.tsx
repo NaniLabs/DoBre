@@ -50,11 +50,11 @@ export function Navigation() {
           {hasDownloads && <a className="nav-link" href={siteConfig.links.downloads}>{copy.nav.downloads}</a>}
           {releaseConfig.donations?.enabled && <a className="nav-link" href={siteConfig.links.support}>{copy.nav.support}</a>}
           <LanguageSelector />
-          <ThemeToggle />
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2">
           <ThemeToggle />
+          <div className="md:hidden">
           <button
             className="grid size-9 place-items-center rounded-lg border border-line bg-surface text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
             type="button"
@@ -66,6 +66,7 @@ export function Navigation() {
             <span className="sr-only">{copy.nav.openMenu}</span>
             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
+          </div>
         </div>
 
         {isMenuOpen && (

@@ -33,10 +33,11 @@
     <meta name="twitter:image:alt" content="DoBre calcula el precio sugerido para tu publicación" />
     <script>
       (() => {
-        const savedTheme = localStorage.getItem('dobre-theme');
+        let savedTheme;
+        try { savedTheme = localStorage.getItem('dobre-theme'); } catch (_) { /* Storage may be unavailable. */ }
         const theme = savedTheme === 'light' || savedTheme === 'dark'
           ? savedTheme
-          : 'light';
+          : 'dark';
         document.documentElement.dataset.theme = theme;
       })();
     </script>

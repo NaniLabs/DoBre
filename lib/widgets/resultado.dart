@@ -99,7 +99,8 @@ class _ResultadoState extends State<Resultado> {
           alignment: Alignment.centerLeft,
           child: TweenAnimationBuilder<double>(
             tween: Tween<double>(begin: widget.precioML, end: widget.precioML),
-            duration: const Duration(milliseconds: 220),
+            duration: MediaQuery.disableAnimationsOf(context)
+                ? Duration.zero : const Duration(milliseconds: 220),
             curve: Curves.easeOutCubic,
             builder: (context, animatedValue, _) {
               final textPrice = (animatedValue - widget.precioML).abs() < 0.01
@@ -251,39 +252,30 @@ class _ProportionalBreakdownBar extends StatelessWidget {
   Widget build(BuildContext context) {
     if (total <= 0) return const SizedBox.shrink();
     final colorScheme = Theme.of(context).colorScheme;
-    final netFlex = ((net / total) * 1000).round().clamp(1, 1000);
-    final commFlex = ((commission / total) * 1000).round().clamp(0, 1000);
-    final instFlex = ((installment / total) * 1000).round().clamp(0, 1000);
-    final otherFlex = ((otherCosts / total) * 1000).round().clamp(0, 1000);
+    final values = [net, commission, installment, otherCosts]
+        .map((value) => value.clamp(0.0, double.infinity))
+        .toList();
+    final sum = values.fold<double>(0, (a, b) => a + b);
+    if (sum <= 0) return const SizedBox.shrink();
+    final colors = [colorScheme.primary, const Color(0xFFF59E0B),
+      const Color(0xFFE11D48), colorScheme.outline];
+    final duration = MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero : const Duration(milliseconds: 350);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(999),
-      child: SizedBox(
-        height: 8,
-        child: Row(
-          children: [
-            Flexible(
-              flex: netFlex,
-              child: Container(color: colorScheme.primary),
+      child: LayoutBuilder(builder: (context, constraints) {
+        return Row(children: [
+          for (var i = 0; i < values.length; i++)
+            AnimatedContainer(
+              duration: duration,
+              curve: Curves.easeOutCubic,
+              width: constraints.maxWidth * values[i] / sum,
+              height: 8,
+              color: colors[i],
             ),
-            if (commFlex > 0)
-              Flexible(
-                flex: commFlex,
-                child: Container(color: const Color(0xFFD97706)),
-              ),
-            if (instFlex > 0)
-              Flexible(
-                flex: instFlex,
-                child: Container(color: const Color(0xFFE11D48)),
-              ),
-            if (otherFlex > 0)
-              Flexible(
-                flex: otherFlex,
-                child: Container(color: colorScheme.outline),
-              ),
-          ],
-        ),
-      ),
+        ]);
+      }),
     );
   }
 }

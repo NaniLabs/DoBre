@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useLayoutEffect, useRef } from 'react'
 import { useLanguage } from '../i18n/LanguageProvider'
 
 type CategoryId =
@@ -145,9 +145,40 @@ export function InverseCalculator() {
     return { classic: calculate('classic'), premium: calculate('premium') }
   }, [state])
   const calculation = calculations[state.publicationType]
+  const resultRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    const root = resultRef.current
+    if (!root) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    root.querySelectorAll<HTMLElement>('.distribution-segment').forEach((element) => {
+      const previous = element.dataset.previousWidth ?? element.style.width
+      const next = element.style.width
+      element.getAnimations().forEach((animation) => animation.cancel())
+      if (!reduced && previous !== next) {
+        element.animate([{ width: previous }, { width: next }], { duration: 350, easing: 'ease-out' })
+      }
+      element.dataset.previousWidth = next
+    })
+    const number = root.querySelector<HTMLElement>('.animated-price')
+    if (!number) return
+    const target = calculation.suggestedPrice
+    const previous = Number(number.dataset.value ?? target)
+    number.dataset.value = String(target)
+    if (reduced || previous === target) return
+    const animation = number.animate([{ opacity: 0.75 }, { opacity: 1 }], { duration: 350, easing: 'ease-out' })
+    let frame = 0
+    const render = () => {
+      const progress = Math.min(1, Number(animation.currentTime ?? 0) / 350)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      number.textContent = `$ ${formatCurrency(previous + (target - previous) * eased, language)}`
+      if (progress < 1 && animation.playState !== 'idle') frame = requestAnimationFrame(render)
+    }
+    frame = requestAnimationFrame(render)
+    return () => { cancelAnimationFrame(frame); animation.cancel() }
+  }, [calculation, language])
   const segments = [
-    { label: language === 'es' ? 'Neto en mano' : 'Net payout', amount: Math.max(0, calculation.suggestedPrice - calculation.commission - calculation.installmentFee - calculation.fixedCharge - calculation.shippingCost), color: '#0D9488' },
-    { label: language === 'es' ? 'Comisión ML' : 'ML commission', amount: calculation.commission, color: '#D97706' },
+    { label: language === 'es' ? 'Neto en mano' : 'Net payout', amount: Math.max(0, calculation.suggestedPrice - calculation.commission - calculation.installmentFee - calculation.fixedCharge - calculation.shippingCost), color: '#10b981' },
+    { label: language === 'es' ? 'Comisión ML' : 'ML commission', amount: calculation.commission, color: '#f59e0b' },
     { label: language === 'es' ? 'Financiación cuotas' : 'Installment financing', amount: calculation.installmentFee, color: '#E11D48' },
     { label: language === 'es' ? 'Envío / cargo fijo' : 'Shipping / fixed fee', amount: calculation.fixedCharge + calculation.shippingCost, color: '#64748B' },
   ].filter((segment) => segment.amount > 0)
@@ -344,7 +375,7 @@ export function InverseCalculator() {
 
         {/* Result Box - High contrast in both light and dark themes */}
         {!calculation.error && calculation.suggestedPrice > 0 && (
-          <div className="rounded-xl border border-line bg-surface-raised p-4 sm:p-5">
+          <div ref={resultRef} className="rounded-xl border border-line bg-surface-raised p-4 sm:p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <p className="font-mono text-xs font-medium uppercase tracking-wider text-teal">
                 {copy.calculator.suggestedPrice}
@@ -354,7 +385,7 @@ export function InverseCalculator() {
               </span>
             </div>
             <div className="mt-1.5 flex flex-wrap items-center justify-between gap-3">
-              <p className="text-2xl sm:text-3xl font-bold tracking-tight text-ink">$ {formatCurrency(calculation.suggestedPrice, language)}</p>
+              <p className="animated-price text-2xl sm:text-3xl font-bold tracking-tight text-ink">$ {formatCurrency(calculation.suggestedPrice, language)}</p>
               <button type="button" className="copy-price" onClick={copyPrice}>
                 {copyStatus === 'copied' ? (language === 'es' ? '✓ Copiado' : '✓ Copied') : (language === 'es' ? 'Copiar precio' : 'Copy price')}
               </button>
@@ -412,6 +443,10 @@ export function InverseCalculator() {
                   </span>
                 </div>
               )}
+            </div>
+            <div className="mt-3 flex justify-between gap-3 font-semibold text-teal">
+              <span>{language === 'es' ? 'Neto final' : 'Final payout'}</span>
+              <span>$ {formatCurrency(Math.max(0, calculation.suggestedPrice - calculation.commission - calculation.installmentFee - calculation.fixedCharge - calculation.shippingCost), language)}</span>
             </div>
           </div>
         )}

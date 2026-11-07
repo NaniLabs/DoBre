@@ -14,7 +14,7 @@ class ThemeProvider extends ChangeNotifier {
 
   static const _themeKey = 'app_theme_dark_mode';
   final SharedPreferences? _preferences;
-  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode _themeMode = ThemeMode.dark;
 
   ThemeMode get themeMode => _themeMode;
 
@@ -22,8 +22,8 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> cambiarTema(bool oscuro) async {
     _themeMode = oscuro ? ThemeMode.dark : ThemeMode.light;
-    await _preferences?.setBool(_themeKey, oscuro);
     notifyListeners();
+    await _preferences?.setBool(_themeKey, oscuro);
   }
 }
 

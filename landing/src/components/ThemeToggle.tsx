@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useLanguage } from '../i18n/LanguageProvider'
 
 type Theme = 'light' | 'dark'
 
@@ -7,31 +6,34 @@ function getInitialTheme(): Theme {
   const documentTheme = document.documentElement.dataset.theme
   if (documentTheme === 'light' || documentTheme === 'dark') return documentTheme
 
-  const savedTheme = window.localStorage.getItem('dobre-theme')
+  let savedTheme: string | null = null
+  try { savedTheme = window.localStorage.getItem('dobre-theme') } catch { /* Storage may be unavailable. */ }
   if (savedTheme === 'light' || savedTheme === 'dark') return savedTheme
 
-  return 'light'
+  return 'dark'
 }
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
-  const { copy } = useLanguage()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
-    window.localStorage.setItem('dobre-theme', theme)
+    try { window.localStorage.setItem('dobre-theme', theme) } catch { /* Keep the live selection. */ }
   }, [theme])
 
   const isDark = theme === 'dark'
 
   return (
     <button
-      className="grid size-10 place-items-center rounded-full border border-line bg-surface text-muted transition duration-200 hover:-translate-y-0.5 hover:bg-surface-raised hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
+      id="theme-toggle"
+      className="flex min-h-11 items-center gap-2 px-3 rounded-full border border-line bg-surface text-muted transition duration-200 hover:-translate-y-0.5 hover:bg-surface-raised hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
       type="button"
-      aria-label={isDark ? copy.nav.themeToLight : copy.nav.themeToDark}
+      aria-label="Cambiar tema"
+      aria-pressed={isDark}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
       {isDark ? <SunIcon /> : <MoonIcon />}
+      <span className="text-xs font-semibold">{isDark ? 'Oscuro' : 'Claro'}</span>
     </button>
   )
 }

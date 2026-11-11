@@ -41,7 +41,7 @@ class CreditsScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Versión 1.0.1 • Desarrollado por Nani',
+                              'Versión 1.0.2 • Desarrollado por Nani',
                               style: theme.textTheme.titleSmall?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                               ),
@@ -84,7 +84,7 @@ class CreditsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  _CreditLine(title: 'Versión', value: '1.0.0 (Release Estable)'),
+                  _CreditLine(title: 'Versión', value: '1.0.2 (Release Estable)'),
                   _CreditLine(title: 'Base', value: 'Flutter'),
                   _CreditLine(title: 'Backend', value: 'Cloudflare Workers'),
                   _CreditLine(title: 'Config', value: 'Configuración remota'),

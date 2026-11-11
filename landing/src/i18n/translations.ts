@@ -32,7 +32,7 @@ export const translations = {
       tryWeb: 'Abrir calculadora Web',
       noSpreadsheets: 'Búsqueda binaria exacta',
       updatable: 'Escalas y tarifas actualizables',
-      available: 'v1.0.1 disponible',
+      available: 'v1.0.2 disponible',
     },
     downloads: {
       android: 'Descargar APK (Android)',
@@ -43,7 +43,7 @@ export const translations = {
       tutorialTitle: 'Instrucciones de instalación en Android (APK directo)',
       tutorialIntro: 'DoBre se distribuye mediante GitHub Releases. Al instalar un paquete APK fuera de Google Play, Android solicita confirmación del origen.',
       steps: [
-        'Descargá el archivo DoBre-v1.0.1.apk.',
+        'Descargá el archivo DoBre-v1.0.2.apk.',
         'Abrí el archivo desde las descargas de tu navegador.',
         'Si el sistema solicita permiso, habilitá la instalación desde esa fuente.',
         'Confirmá la instalación del paquete.',
@@ -194,7 +194,7 @@ export const translations = {
       tryWeb: 'Open Web Calculator',
       noSpreadsheets: 'Exact binary search',
       updatable: 'Updatable fee tables',
-      available: 'v1.0.1 available',
+      available: 'v1.0.2 available',
     },
     downloads: {
       android: 'Download APK (Android)',
@@ -205,7 +205,7 @@ export const translations = {
       tutorialTitle: 'Android installation instructions (direct APK)',
       tutorialIntro: 'DoBre is distributed via GitHub Releases. When installing an APK outside Google Play, Android requests source confirmation.',
       steps: [
-        'Download the DoBre-v1.0.1.apk file.',
+        'Download the DoBre-v1.0.2.apk file.',
         'Open the downloaded file from your browser.',
         'If prompted, allow installation from this source in Settings.',
         'Confirm package installation.',

@@ -1,0 +1,13 @@
+{
+  "name": "dobre-v1-0-0",
+  "compatibility_date": "2026-08-31",
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "./build/web",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "dobre-app.nanilabs.lat", "custom_domain": true },
+    { "pattern": "www.dobre-app.nanilabs.lat", "custom_domain": true }
+  ]
+}

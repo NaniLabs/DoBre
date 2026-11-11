@@ -24,7 +24,7 @@ class Footer extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Herramienta libre e independiente • v1.0.0',
+            'Herramienta libre e independiente • v1.0.2',
             textAlign: TextAlign.center,
             style: theme.textTheme.labelSmall?.copyWith(
               color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
